@@ -11,9 +11,7 @@
 alias = {
     "@game": "La Guerre de Proxima",
     "@friend": "La Fédération terrestre",
-    "@enemy": "Les Colons rebelles",
-    "@vessel1": "Le Furtif",
-    "@vessel2": "Le Destroyeur"
+    "@enemy": "Les Colons rebelles"
 }
 
 def replace_alias(string):

@@ -10,6 +10,7 @@ from alias import *
 
 # Dictionnaire des pages du jeu avec un format
 # précis à respecter mais qui restent modifiables
+# Les alias ne peuvent figurer que dans text
 pages = dict()
 
 # Page d'accueil obligatoire
@@ -25,7 +26,8 @@ pages["vaisseau"] = {
     "image": "vaisseau.jpg",
     "background": "#3387c0",
     "text": "Veuillez choisir votre vaisseau spatial de combat...",
-    "choices": [["@vessel1", "@vessel1"], ["@vessel2", "@vessel2"]]
+    "choices": [["Le Furtif, un vaisseau aussi silencieux que la brise !", "furtif"], 
+                ["Le Destroyeur, un vaisseau qui fonce dans le tas !", "destroyeur"]]
 }
 
 # Dictionnaire des liens entre les pages
