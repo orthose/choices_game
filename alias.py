@@ -9,5 +9,23 @@
 # Dictionnaire des alias permettant de personnaliser
 # certaines variables importantes du texte
 alias = {
-    "@game": "La Guerre de Proxima"
+    "@game": "La Guerre de Proxima",
+    "@friend": "La Fédération terrestre",
+    "@enemy": "Les Colons rebelles",
+    "@vessel1": "Le Furtif",
+    "@vessel2": "Le Destroyeur"
 }
+
+def replace_alias(string):
+    """ 
+    " Remplace les alias par leur vraie valeur
+    " dans la chaine de caractères en paramètre
+    " @param string: chaîne de caractères
+    " @return: Renvoie une nouvelle chaîne de
+    " caractères modifiée
+    """
+    for one_alias in alias.keys():
+        if one_alias in string:
+            string = string.replace(one_alias, alias[one_alias])
+            
+    return string
