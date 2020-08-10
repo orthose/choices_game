@@ -15,12 +15,14 @@ alias = {
 }
 
 def replace_alias(string):
-    """ 
-    " Remplace les alias par leur vraie valeur
-    " dans la chaine de caractères en paramètre
-    " @param string: chaîne de caractères
-    " @return: Renvoie une nouvelle chaîne de
-    " caractères modifiée
+    """Remplace les alias par leur vraie valeur 
+    dans la chaine de caractères en paramètre.
+       
+    :param string: chaîne de caractères à modifier
+    :type string: str
+    :return: Renvoie une nouvelle chaîne de
+     caractères modifiée
+    :rtype: str
     """
     for one_alias in alias.keys():
         if one_alias in string:
