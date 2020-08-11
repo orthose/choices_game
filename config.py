@@ -29,7 +29,7 @@ default_title_background = "#ffffff"
 default_title_font = ('Ubuntu', 30, 'bold')
 
 # Image par défaut d'une page
-default_image = "default_image.png"
+default_image = "default_image.jpg"
 
 def configure_first_page(page):
     """Permet de configurer la première page
