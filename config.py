@@ -14,7 +14,7 @@
 from pages import *
 
 # Couleur par défaut de l'arrière-plan d'une page
-default_page_background = "#ffffff"
+default_background_page = "#ffffff"
 
 # Titre par défaut de la fenêtre
 default_window_title = "Jeu des Choix"
@@ -22,14 +22,27 @@ default_window_title = "Jeu des Choix"
 # Titre par défaut d'une page
 default_page_title = "Page sans nom"
 
-# Couleur par défaut de l'arrière plan du titre d'une page
-default_title_background = "#ffffff"
+# Couleur par défaut de l'arrière-plan du titre d'une page
+default_background_title = "#ffffff"
+
+# Couleur par défaut du texte du titre d'une page
+default_foreground_title = "black"
+
+# Épaisseur par défaut de l'étiquette du titre d'une page
+default_borderwidth_title = None
+
+# Relief par défaut de l'étiquette du titre d'une page
+default_relief_title = "flat"
 
 # Titre par défaut d'une page
-default_title_font = ('Ubuntu', 30, 'bold')
+default_font_title = ('Ubuntu', 30, 'bold')
 
 # Image par défaut d'une page
 default_image = "default_image.jpg"
+
+# Couleur par défaut de l'arrière-plan
+# du choix 1 lorsque le curseur passe devant
+default_activebackground_choice1 = "yellow"
 
 def configure_first_page(page):
     """Permet de configurer la première page
