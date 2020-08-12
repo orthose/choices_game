@@ -9,9 +9,7 @@
 # Dictionnaire des alias permettant de personnaliser
 # certaines variables importantes du texte
 alias = {
-    "@game": "La Guerre de Proxima",
-    "@friend": "La Fédération terrestre",
-    "@enemy": "Les Colons rebelles"
+    "@game": "La randonnée pedestre",
 }
 
 def replace_alias(string):

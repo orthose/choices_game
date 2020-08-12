@@ -11,28 +11,23 @@ from Page import *
 # TODO: Pages de données du jeu à modifier pour personnalisation
 
 # Couleurs pré-paramétrées
-space_color = "#3387c0"
+herbe = "#22ee22"
 
 
 # Liste de toutes les pages
-accueil = Page("accueil")
-vaisseau = Page("vaisseau")
-furtif = Page("furtif")
-destroyeur = Page("destroyeur")
+accueil = Page("Le commencement d'une belle aventure")
+victoire = Page("Une belle réussite")
 
 
 # Page d'accueil obligatoire
 accueil.image = "accueil.jpg"
-accueil.background = space_color
-accueil.text = "Bienvenue dans @game. La guerre a été déclarée par @enemy. @friend doit réagir au plus vite !"
-accueil.add_choice("Commencer", vaisseau)
+accueil.text = "Bienvenue dans @game. Un jeu fait pour vous émerveiller de la beauté de la nature. Voulez-vous commencer à jouer ?"
+accueil.add_choice("Non, je ne préfère pas.", accueil)
+accueil.add_choice("Oui, allons-y.", victoire)
+accueil.background = herbe
 
-
-# Page de choix du vaisseau
-vaisseau.image = "vaisseau.jpg"
-vaisseau.background = space_color
-vaisseau.text = "Veuillez choisir votre vaisseau spatial de combat..."
-vaisseau.add_choice("Le Furtif, un vaisseau aussi silencieux que la brise !", furtif)
-vaisseau.add_choice("Le Destroyeur, un vaisseau qui fonce dans le tas !", destroyeur)
-
+# Page de victoire
+victoire.image = "victoire.img"
+victoire.text = "Vous venez de remporter la partie ! Bravo pour tous vos efforts !"
+victoire.add_choice("Recommencer", accueil)
 
