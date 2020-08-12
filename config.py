@@ -27,7 +27,7 @@ default_background_page = "#ffffff"
 default_cursor_page = "left_ptr"
 
 # Marges en x et y des widgets de la page
-default_padx = 50; default_pady = 0
+default_padx = 50; default_pady = 10
 
 # Police par défaut de la page
 default_font = ('Ubuntu', 15, 'normal')
