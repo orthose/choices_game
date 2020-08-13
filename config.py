@@ -26,7 +26,7 @@ default_background_page = "#ffffff"
 # Curseur par défaut de la page
 default_cursor_page = "left_ptr"
 
-# Marges en x et y des widgets de la page
+# Marges par défaut en x et y des widgets de la page
 default_padx = 50; default_pady = 10
 
 # Police par défaut de la page
@@ -51,6 +51,9 @@ default_borderwidth_title = None
 # Relief par défaut de l'étiquette du titre d'une page
 default_relief_title = "flat"
 
+# Marges par défaut en x et y du titre d'une page
+default_padx_title = default_padx; default_pady_title = default_pady
+
 # Titre par défaut d'une page
 default_font_title = ('Ubuntu', 30, 'bold')
 
@@ -65,16 +68,25 @@ default_image = "default_image.jpg"
 # Personnalisation de la zone de texte      #
 #############################################
 
+# Texte par défaut de la zone de texte
 default_text = "Exemple de texte"
- 
+
+# Couleur d'arrière-plan par défaut de la zone de texte
 default_background_text = "#ffffff"
 
+# Couleur de la police par défaut de la zone de texte
 default_foreground_text = "black"
 
+# Épaisseur par défaut de la zone de texte
 default_borderwidth_text = None
 
+# Relief par défaut de la zone de texte
 default_relief_text = "flat" 
 
+# Marges par défaut en x et y de la zone de texte
+default_padx_text = default_padx; default_pady_text = default_pady
+
+# Police par défaut de la zone de texte
 default_font_text = default_font
 
 #############################################
@@ -104,6 +116,10 @@ default_borderwidth_choice = (None, ) * 4
 
 # Relief par défaut du bouton de choix
 default_relief_choice = ("groove", ) * 4 
+
+# Marges par défaut en x et y des boutons
+default_padx_choice = (default_padx, ) * 4
+default_pady_choice = (default_pady, ) * 4
 
 # Police par défaut du bouton de choix
 default_font_choice = (default_font, ) * 4
