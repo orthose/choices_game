@@ -96,41 +96,31 @@ default_font_text = default_font
 ### Tuple pour les choix 1, 2, 3 et 4 ###
 
 # Texte à afficher par défaut sur ce choix
-default_text_choice = ("Choix 1", "Choix 2", "Choix 3", "Choix 4")
+default_text_choices = ("Choix 1", "Choix 2", "Choix 3", "Choix 4")
 
 # Curseur par défaut du choix
-default_cursor_choice = (default_cursor_page, ) * 4
+default_cursor_choices = (default_cursor_page, ) * 4
 
 # Arrière-plan par défaut du choix
-default_background_choice = ("#ffffff", ) * 4
+default_background_choices = ("#ffffff", ) * 4
 
 # Couleur par défaut de l'arrière-plan
 # du choix 1 lorsque le curseur passe devant
-default_activebackground_choice = ("yellow", ) * 4
+default_activebackground_choices = ("yellow", ) * 4
 
 # Couleur du texte par défaut du choix
-default_foreground_choice = ("black", ) * 4
+default_foreground_choices = ("black", ) * 4
 
 # Épaisseur par défaut du bouton de choix
-default_borderwidth_choice = (None, ) * 4
+default_borderwidth_choices = (None, ) * 4
 
 # Relief par défaut du bouton de choix
-default_relief_choice = ("groove", ) * 4 
+default_relief_choices = ("groove", ) * 4 
 
 # Marges par défaut en x et y des boutons
-default_padx_choice = (default_padx, ) * 4
-default_pady_choice = (default_pady, ) * 4
+default_padx_choices = (default_padx, ) * 4
+default_pady_choices = (default_pady, ) * 4
 
 # Police par défaut du bouton de choix
-default_font_choice = (default_font, ) * 4
-
-
-def configure_first_page(page):
-    """Permet de configurer la première page
-    à s'afficher automatiquement, en modifiant
-    toutes les valeurs par défaut.
-    :param page: Page d'entrée dans le jeu
-    :type page: Page
-    """
-    pass
+default_font_choices = (default_font, ) * 4
 
