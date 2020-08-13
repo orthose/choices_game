@@ -9,7 +9,7 @@
 # Dictionnaire des alias permettant de personnaliser
 # certaines variables importantes du texte
 alias = {
-    "@game": "La randonnée pedestre",
+    "@game": "La randonnée pédestre",
 }
 
 def replace_alias(string):

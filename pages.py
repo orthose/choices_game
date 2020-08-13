@@ -19,12 +19,16 @@ accueil = Page("Le commencement d'une belle aventure")
 victoire = Page("Une belle réussite")
 
 
+# Première page à afficher
+Page.first_page = accueil
+
+
 # Page d'accueil obligatoire
 accueil.image = "accueil.jpg"
 accueil.text = "Bienvenue dans @game. Un jeu fait pour vous émerveiller de la beauté de la nature. Voulez-vous commencer à jouer ?"
 accueil.add_choice("Non, je ne préfère pas.", accueil)
 accueil.add_choice("Oui, allons-y.", victoire)
-accueil.background = herbe
+accueil.graphic_global.background = herbe
 
 # Page de victoire
 victoire.image = "victoire.img"

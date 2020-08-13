@@ -20,6 +20,8 @@ class Page:
     """
     
     # Première page point d'entrée du jeu
+    # À modifier dans pages.py sous peine
+    # d'erreur au démarrage du jeu
     first_page = None
     
     # Dictionnaire de toutes les pages de données
@@ -57,20 +59,16 @@ class Page:
         
         # Données graphiques classées par section
         # Données graphiques globales
-        self.graphic_global = GraphicalParameters()
-        self.graphic_global["background"] = config.default_background_page
-        self.graphic_global["cursor"] = config.default_cursor_page
-        self.graphic_global["padx"] = config.default_padx
-        self.graphic_global["pady"] = config.default_pady
-        self.graphic_global["font"] = config.default_font
+        self.graphic_global = GraphicalParameters(GraphicalParameters.GLOBAL)
         
         # Données graphiques du titre de la page
-        self.graphic_title = GraphicalParameters()
-        self.graphic_title["background"] = default_background_title
-        self.graphic_title["foreground"] = default_foreground_title
-        self.graphic_title["borderwidth"] = default_borderwidth_title
-        self.graphic_title["relief"] = default_relief_title
-        self.graphic_title["font"] = default_font_title
+        self.graphic_title = GraphicalParameters(GraphicalParameters.TITLE)
+        
+        # Données graphiques du texte de la page
+        self.graphic_text = GraphicalParameters(GraphicalParameters.TEXT)
+        
+        # Données graphiques des boutons de choix de la page
+        self.graphic_choices = GraphicalParameters(GraphicalParameters.CHOICES)
         
         #Page.all_pages[title] = self
         Page.links[self] = list()
@@ -147,175 +145,44 @@ class GraphicalParameters:
         :type widget: int
         """
         
-        self.__widget = widget
+        self.widget = widget
         
         if widget == GraphicalParameters.GLOBAL:
-            self.__cursor = config.default_cursor_page
-            self.__background = config.default_background_page
+            self.cursor = config.default_cursor_page
+            self.background = config.default_background_page
         
         elif widget == GraphicalParameters.TITLE:
-            self.__background = config.default_background_title
-            self.__foreground = config.default_foreground_title
-            self.__borderwidth = config.default_borderwidth_title
-            self.__relief = config.default_relief_title
-            self.__padx = config.default_padx_title
-            self.__pady = config.default_pady_title
-            self.__font = config.default_font_title
+            self.background = config.default_background_title
+            self.foreground = config.default_foreground_title
+            self.borderwidth = config.default_borderwidth_title
+            self.relief = config.default_relief_title
+            self.padx = config.default_padx_title
+            self.pady = config.default_pady_title
+            self.font = config.default_font_title
         
         elif widget == GraphicalParameters.TEXT:
-            self.__background = config.default_background_text
-            self.__foreground = config.default_foreground_text
-            self.__borderwidth = config.default_borderwidth_text
-            self.__relief = config.default_relief_text
-            self.__padx = config.default_padx_text
-            self.__pady = config.default_pady_text
-            self.__font = config.default_font_text
+            self.background = config.default_background_text
+            self.foreground = config.default_foreground_text
+            self.borderwidth = config.default_borderwidth_text
+            self.relief = config.default_relief_text
+            self.padx = config.default_padx_text
+            self.pady = config.default_pady_text
+            self.font = config.default_font_text
         
         elif widget == GraphicalParameters.CHOICES:
             # Attention ici les paramètres sont des tuples
-            self.__cursor = config.default_cursor_choices
-            self.__background = config.default_background_choices
-            self.__activebackground = config.default_activebackground_choices
-            self.__foreground = config.default_foreground_choices
-            self.__borderwidth = config.default_borderwidth_choices
-            self.__relief = config.default_relief_choices
-            self.__padx = config.default_padx_choices
-            self.__pady = config.default_pady_choices
-            self.__font = config.default_font_choices
+            self.cursor = config.default_cursor_choices
+            self.background = config.default_background_choices
+            self.activebackground = config.default_activebackground_choices
+            self.foreground = config.default_foreground_choices
+            self.borderwidth = config.default_borderwidth_choices
+            self.relief = config.default_relief_choices
+            self.padx = config.default_padx_choices
+            self.pady = config.default_pady_choices
+            self.font = config.default_font_choices
         
-        else
+        else:
             raise ValueError("Constante de widget invalide")
-        
-    @property
-    def cursor(self):
-        return self._cursor
-        
-    @cursor.setter
-    def cursor(self, cursor):
-        # https://www.tcl.tk/man/tcl8.6/TkCmd/cursors.htm
-        all_cursors = list_values('cursors.txt')
-        if not cursor in all_cursors
-            raise ValueError("Nom de curseur de GraphicalParameters::cursor invalide")
-        else
-            self._cursor = cursor
-            
-    @property
-    def background(self):
-        return self.__background
-        
-    @background.setter
-    def background(self, background):
-        if check_color(background, "background"):
-            self.__background = background
-        
-    @property
-    def activebackground(self):
-        return self.__activebackground
-        
-    @activebackground.setter
-    def activebackground(self, activebackground):
-        if check_color(activebackground, "activebackground"):
-            self.__activebackground = activebackground
-        
-    @property
-    def foreground(self):
-        return self.__foreground
-        
-    @foreground.setter
-    def foreground(self, foreground):
-        if check_color(foreground, "foreground"):
-            self.__foreground = foreground
-        
-    @property
-    def borderwidth(self):
-        return self.__borderwidth
-        
-    @borderwidth.setter
-    def borderwidth(self, borderwidth):
-        
-        if check_int(borderwidth, "borderwidth")
-            self.__borderwidth = borderwidth
-        
-    @property
-    def relief(self):
-        return self.__relief
-       
-    @relief.setter
-    def relief(self, relief):
-        if type(relief) != str:
-            raise TypeError("GraphicalParameters::relief doit être de type str")
-        all_reliefs = list_values('reliefs.txt')
-        all_reliefs += [r.lower() for r in all_reliefs]
-        if not relief in all_reliefs:
-            raise ValueError("Valeur de GraphicalParameters::relief invalide")
-        self.__relief = relief
-        
-    @property
-    def padx(self):
-        return self.__padx
-        
-    @property
-    def pady(self):
-        return self.__pady
-        
-    @padx.setter
-    def padx(self, padx):
-        if check_int(padx, "padx"):
-            self.__padx = padx
-            
-    @pady.setter
-        if check_int(padx, "pady"):
-            self.__padx = padx
-            
-    @property
-    def font(self):
-    
-            
-        
-    def check_color(color, param_name):
-        """Vérifie que la couleur est valide.
-        :param color: Couleur à vérifier
-        :param param_name: Nom du paramètre à afficher en cas d'erreur
-        :type color: str
-        :type param_name: str
-        :return: True si valide, False sinon
-        :rtype: bool
-        """
-        if type(color) != str:
-            raise TypeError("GraphicalParameters::"+param_name+" doit être de type str")
-            
-        # http://www.science.smith.edu/dftwiki/index.php/Color_Charts_for_TKinter
-        all_colors = list_values('colors.txt')
-        
-        if not ((color in all_colors) or  match("#([0-9]|[a-f]){6}", color)):
-            raise ValueError("Couleur de GraphicalParameters::"+param_name+" invalide")
-        
-        return True
-        
-    def check_int(integer, param_name):
-        """Vérifie la validité d'un intier positif ou nul.
-        :param integer: Valeur de l'entier
-        :param param_name: Nom du paramètre à afficher en cas d'erreur
-        :type integer: int
-        :type param_name: str
-        :return: True si valide, False sinon
-        :rtype: bool
-        """
-        if type(integer) != int:
-            raise TypeError("GraphicalParameters::"+param_name+" doit être de type int")
-        if integer < 0:
-            raise ValueError("GraphicalParameters::"+param_name+" doit être positif ou nul")
-        return True
-        
-    def list_values(file_name):
-        """Met dans une liste toutes les valeurs d'un fichier
-        texte dont les valeurs sont séparées par des sauts de ligne.
-        :param file_name: Nom du fichier source
-        :type file_name: str
-        """
-        with open(file_name, 'r') as fichier:
-            all_values = fichier.read()
-        return all_values.split("\n")
         
 
 class MaxChoicesException(Exception):

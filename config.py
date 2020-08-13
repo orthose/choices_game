@@ -11,7 +11,6 @@
 # Pour les paramétrer se référer au site web :
 # http://tkinter.fdex.eu/doc/sa.html
 
-from pages import *
 
 #############################################
 # Personnalisation de la fenêtre principale #
