@@ -7,10 +7,11 @@
 #####################################################
 
 from tkinter import *
-from PIL import Image, ImageTk #sudo apt-get install -y python-pil.imagetk
+from PIL import Image, ImageTk # sudo apt-get install -y python-pil.imagetk
 import tkinter.scrolledtext as st
+from pygame import mixer # sudo apt-get install python3-pygame
 from Page import *
-import config
+from config import default_window_title
 
 # Pour l'utilisation de la bibliothèque Tkinter
 # les docs utilisées sont principalement :
@@ -44,7 +45,7 @@ class Graphic(Tk):
         
         # Zone d'affichage de l'image
         self.canvas_image = Canvas(self)
-        self.image = config.default_image
+        self.image = ...
         # Lors du redimensionnement de la fenêtre l'image
         # doit également être redimensionnée
         self.canvas_image.bind('<Configure>', lambda e: self.__image(self.image))
@@ -58,7 +59,7 @@ class Graphic(Tk):
         self.text_area.pack(fill=X, padx=config.default_padx, pady=config.default_pady)
         
         # Boutons des différents choix (jusqu'à 4 choix)
-        self.choice1 = Button(self, justify=LEFT)
+        self.choice1 = Button(self)
         self.choice2 = Button(self)
         self.choice3 = Button(self)
         self.choice4 = Button(self)
@@ -71,34 +72,16 @@ class Graphic(Tk):
             c.bind('<Configure>', lambda e: c.config(wraplength = c.winfo_width()))
             c.pack(fill=X, expand=True, padx=config.default_padx, pady=config.default_pady)
         
-        # Appel des méthodes privées pour configurer le contenu
-        # et la forme des widgets de la page
-        
-        # Couleur de l'arrière-plan de la page
-        self.__page()
-        
-        # Titre de la page 
-        self.__title()
-        
-        # Texte de la page
-        self.__text()
-        
-        # Boutons des choix
-       # self.__choices()
+        # Affichage de la première page (le point d'entrée)
+        self.print_page(first_page)
     
     def configure_initial_window(self):
         """Configure la fenêtre et ses widgets
         lors de l'initialisation.
         """
+        # A supprimer !!!
+        pass
         
-        # Couleur de l'arrière-plan de la page
-        self.__page()
-        
-        # Titre de la page 
-        self.__title()
-        
-        # Texte de la page
-        self.__text()
         
         """
         # https://www.reddit.com/r/learnpython/comments/6dndqz/how_would_you_make_text_that_automatically_wraps/
@@ -112,15 +95,7 @@ class Graphic(Tk):
         self.choice3.pack(fill=X, expand=True)
         self.choice4 = Button(self, text = "Choix 4")
         self.choice4.pack(fill=X, expand=True)
-        #self.choice4.pack_forget() https://www.it-swarm.dev/fr/python/comment-supprimer-les-widgets-tkinter-dune-fenetre/1069571513/
-        
-        #TODO: Structurer configure_initial_window en plusieurs méthodes privées
-        # voir ci-dessous
-        
-        #TODO: Finir de relier graphics et config
-        
-        # Mise à jour des paramètres de la fenêtre
-        self.update()"""
+        #self.choice4.pack_forget() https://www.it-swarm.dev/fr/python/comment-supprimer-les-widgets-tkinter-dune-fenetre/1069571513/"""
     
     @property 
     def window_width(self):
@@ -139,9 +114,23 @@ class Graphic(Tk):
         :param page: Page à afficher
         :type page: Page
         """
-        pass
+        
+        if page == None:
+            raise ValueError("Impossible d'afficher une page non-instanciée !") 
+            
+        # Appel des méthodes privées pour configurer le contenu
+        # et la forme des widgets de la page
+        
+        # Couleur de l'arrière-plan de la page
+        self.__page(**page.graphic_global)
+        # Titre de la page
+        self.__title(**page.graphic_title)
+        # Texte de la page
+        self.__text(**page.graphic_text)
+        # Boutons des choix
+        self.__choices(**page.graphic_choices)
     
-    def __page(self, title=config.default_window_title, background=config.default_background_page, cursor=config.default_cursor_page):
+    def __page(self, **kwargs):
         """Configure la page de manière globale.
         """
         # Titre de la fenêtre principale
@@ -151,7 +140,7 @@ class Graphic(Tk):
         # Curseur de la page
         self.configure(cursor=cursor)
     
-    def __title(self, title=config.default_page_title, background=config.default_background_title, foreground=config.default_foreground_title, borderwidth=config.default_borderwidth_title, relief=config.default_relief_title, font=config.default_font_title):
+    def __title(self, **kwargs):
         """Configure le titre de la page.
         """
         self.label_title.config(text=title, bg=background, fg=foreground, bd=borderwidth, relief=relief, font=font, justify=CENTER)
@@ -194,7 +183,7 @@ class Graphic(Tk):
         self.canvas_image.config(width = new_size[0], height = new_size[1])
         self.canvas_image.create_image(0, 0, anchor=NW, image=self.loaded_image)
     
-    def __text(self, text=config.default_text, background=config.default_background_text, foreground=config.default_foreground_text, borderwidth=config.default_borderwidth_text, relief=config.default_relief_text, font=config.default_font_text):
+    def __text(self, **kwargs):
         """Configure la zone de texte de la page.
         :param text: Texte à afficher dans la zone
         :type text: str
@@ -221,7 +210,7 @@ class Graphic(Tk):
         # Force la zone en lecture seule
         self.text_area.configure(state="disabled")
         
-    def __choices(self, choices_data, default_cursor_choice=, background=config.default_background_title, activebackground=config.default_activebackground_title, foreground=config.default_foreground_title, borderwidth=config.default_borderwidth_title, relief=config.default_relief_title, font=config.default_font_title):
+    def __choices(self, **kwargs):
         """Configure les boutons de choix de la page.
         :param choices: Ensemble de couples (message, target_page)
         :type choices: set
