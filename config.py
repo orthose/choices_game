@@ -81,86 +81,32 @@ default_font_text = default_font
 # Personnalisation de la zone de choix      #
 #############################################
 
-### Choice (1) ###
+### Tuple pour les choix 1, 2, 3 et 4 ###
 
 # Texte à afficher par défaut sur ce choix
-default_text_choice1 = "Choix 1"
+default_text_choice = ("Choix 1", "Choix 2", "Choix 3", "Choix 4")
 
 # Curseur par défaut du choix
-default_cursor_choice1 = default_cursor_page
+default_cursor_choice = (default_cursor_page, ) * 4
 
 # Arrière-plan par défaut du choix
-default_background_choice1 = "#ffffff"
+default_background_choice = ("#ffffff", ) * 4
 
 # Couleur par défaut de l'arrière-plan
 # du choix 1 lorsque le curseur passe devant
-default_activebackground_choice1 = "yellow"
+default_activebackground_choice = ("yellow", ) * 4
 
 # Couleur du texte par défaut du choix
-default_foreground_choice1 = "black"
+default_foreground_choice = ("black", ) * 4
 
 # Épaisseur par défaut du bouton de choix
-default_borderwidth_choice1 = None
+default_borderwidth_choice = (None, ) * 4
 
 # Relief par défaut du bouton de choix
-default_relief_choice1 = "groove" 
+default_relief_choice = ("groove", ) * 4 
 
 # Police par défaut du bouton de choix
-default_font_choice1 = default_font
-
-### Choice (2) ###
- 
-default_text_choice2 = "Choix 2"
-
-default_cursor_choice2 = default_cursor_page
-
-default_background_choice2 = "#ffffff"
-
-default_activebackground_choice2 = "yellow"
-
-default_foreground_choice2 = "black"
-
-default_borderwidth_choice2 = None
-
-default_relief_choice2 = "groove" 
-
-default_font_choice2 = default_font
-
-### Choice (3) ###
-
-default_text_choice3 = "Choix 3"
-
-default_cursor_choice3 = default_cursor_page
-
-default_background_choice3 = "#ffffff"
-
-default_activebackground_choice3 = "yellow"
-
-default_foreground_choice3 = "black"
-
-default_borderwidth_choice3 = None
-
-default_relief_choice3 = "groove" 
-
-default_font_choice3 = default_font
-
-### Choice (4) ###
-
-default_text_choice4 = "Choix 4"
-
-default_cursor_choice4 = default_cursor_page
- 
-default_background_choice4 = "#ffffff"
-
-default_activebackground_choice4 = "yellow"
-
-default_foreground_choice4 = "black"
-
-default_borderwidth_choice4 = None
-
-default_relief_choice4 = "groove" 
-
-default_font_choice4 = default_font
+default_font_choice = (default_font, ) * 4
 
 
 def configure_first_page(page):
