@@ -29,9 +29,14 @@ class Graphic(Tk):
         :type title: str
         :type first_page: Page
         """
-        
+        if first_page == None:
+            raise ValueError("La première page n'a pas été instanciée !")
+            
         # Appel au constructeur de Tk
         super().__init__()
+        
+        # Titre de la fenêtre principale
+        self.title(title)
         
         # Par défaut on fixe la fenêtre en plein écran
         self.geometry("{L}x{H}+0+0".format(L=self.winfo_screenwidth(), H=self.winfo_screenheight()))
@@ -45,7 +50,7 @@ class Graphic(Tk):
         
         # Zone d'affichage de l'image
         self.canvas_image = Canvas(self)
-        self.image = ...
+        self.image = first_page.image
         # Lors du redimensionnement de la fenêtre l'image
         # doit également être redimensionnée
         self.canvas_image.bind('<Configure>', lambda e: self.__image(self.image))
@@ -122,28 +127,25 @@ class Graphic(Tk):
         # et la forme des widgets de la page
         
         # Couleur de l'arrière-plan de la page
-        self.__page(**page.graphic_global)
+        self.__page(**page.graphic_global.__dict__)
         # Titre de la page
-        self.__title(**page.graphic_title)
+        self.__title(page.title, **page.graphic_title.__dict__)
+        # Affichage de l'image
+        self.__image(page.image)
         # Texte de la page
-        self.__text(**page.graphic_text)
+        self.__text(page.text, **page.graphic_text.__dict__)
         # Boutons des choix
-        self.__choices(**page.graphic_choices)
+        self.__choices(page.choices, **page.graphic_choices.__dict__)
     
-    def __page(self, **kwargs):
+    def __page(self, title, **kwargs):
         """Configure la page de manière globale.
         """
-        # Titre de la fenêtre principale
-        self.title(title)
-        # Couleur d'arrière-plan de la page
-        self.configure(bg=background)
-        # Curseur de la page
-        self.configure(cursor=cursor)
+        self.configure(cursor=kwargs["cursor"], bg=kwargs["background"])
     
-    def __title(self, **kwargs):
+    def __title(self, title, **kwargs):
         """Configure le titre de la page.
         """
-        self.label_title.config(text=title, bg=background, fg=foreground, bd=borderwidth, relief=relief, font=font, justify=CENTER)
+        self.label_title.config(text=title, bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], font=kwargs["font"], justify=CENTER)
     
     def __image(self, image):
         """Configure l'image de la page.
@@ -183,7 +185,7 @@ class Graphic(Tk):
         self.canvas_image.config(width = new_size[0], height = new_size[1])
         self.canvas_image.create_image(0, 0, anchor=NW, image=self.loaded_image)
     
-    def __text(self, **kwargs):
+    def __text(self, text, **kwargs):
         """Configure la zone de texte de la page.
         :param text: Texte à afficher dans la zone
         :type text: str
@@ -200,7 +202,7 @@ class Graphic(Tk):
         
         # Configuration de la zone de texte
         # wrap=WORD permet de découper le texte en mots
-        self.text_area.config(bg=background, fg=foreground, bd=borderwidth, relief=relief, font=font, wrap=WORD)
+        self.text_area.config(bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], font=kwargs["font"], wrap=WORD)
         
         # Insertion du texte
         self.text_area.insert(INSERT, text)
@@ -210,7 +212,7 @@ class Graphic(Tk):
         # Force la zone en lecture seule
         self.text_area.configure(state="disabled")
         
-    def __choices(self, **kwargs):
+    def __choices(self, choices, **kwargs):
         """Configure les boutons de choix de la page.
         :param choices: Ensemble de couples (message, target_page)
         :type choices: set
