@@ -12,6 +12,7 @@ import tkinter.scrolledtext as st
 from pygame import mixer # sudo apt-get install python3-pygame
 from Page import *
 from config import default_window_title
+from pages import *
 
 # Pour l'utilisation de la bibliothèque Tkinter
 # les docs utilisées sont principalement :
@@ -22,7 +23,7 @@ class Graphic(Tk):
     et permet d'afficher une page.
     """
     
-    def __init__(self, title=config.default_window_title, first_page):
+    def __init__(self, title=config.default_window_title, first_page=Page.first_page):
         """Initialise la fenêtre principale.
         :param title: Titre de la fenêtre
         :param first_page: Première page à s'afficher
@@ -61,7 +62,7 @@ class Graphic(Tk):
         # Lors du redimensionnement de la fenêtre le texte
         # doit également être redimensionné
         self.text_area.bind('<Configure>', lambda e: self.text_area.config(height=(self.window_height // 100)))
-        self.text_area.pack(fill=X, padx=config.default_padx, pady=config.default_pady)
+        self.text_area.pack(fill=X)
         
         # Boutons des différents choix (jusqu'à 4 choix)
         self.choice1 = Button(self)
@@ -73,9 +74,9 @@ class Graphic(Tk):
         # Lors du redimensionnement de la fenêtre le texte
         # doit également être redimensionné dans les boutons
         # https://www.reddit.com/r/learnpython/comments/6dndqz/how_would_you_make_text_that_automatically_wraps/
-        for c in self.choices_button:
-            c.bind('<Configure>', lambda e: c.config(wraplength = c.winfo_width()))
-            c.pack(fill=X, expand=True, padx=config.default_padx, pady=config.default_pady)
+        for choice in self.choices_button:
+            choice.bind('<Configure>', lambda e: choice.config(wraplength = choice.winfo_width()))
+            choice.pack(fill=X, expand=True)
         
         # Affichage de la première page (le point d'entrée)
         self.print_page(first_page)
@@ -137,7 +138,7 @@ class Graphic(Tk):
         # Boutons des choix
         self.__choices(page.choices, **page.graphic_choices.__dict__)
     
-    def __page(self, title, **kwargs):
+    def __page(self, **kwargs):
         """Configure la page de manière globale.
         """
         self.configure(cursor=kwargs["cursor"], bg=kwargs["background"])
@@ -145,7 +146,7 @@ class Graphic(Tk):
     def __title(self, title, **kwargs):
         """Configure le titre de la page.
         """
-        self.label_title.config(text=title, bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], font=kwargs["font"], justify=CENTER)
+        self.label_title.config(text=title, bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], padx=kwargs["padx"], pady=kwargs["pady"], font=kwargs["font"], justify=CENTER)
     
     def __image(self, image):
         """Configure l'image de la page.
@@ -179,11 +180,11 @@ class Graphic(Tk):
         # Instruction pour redimensionner
         self.loaded_image = self.loaded_image.resize(new_size, Image.ANTIALIAS)
         # Conversion au format PhotoImage pour être compatible avec le canvas
-        self.loaded_image = ImageTk.PhotoImage(self.loaded_image)
+        self.converted_image = ImageTk.PhotoImage(self.loaded_image)
         
         # Création de la zone du canvas et ajout à la fenêtre principale
         self.canvas_image.config(width = new_size[0], height = new_size[1])
-        self.canvas_image.create_image(0, 0, anchor=NW, image=self.loaded_image)
+        self.canvas_image.create_image(0, 0, anchor=NW, image=self.converted_image)
     
     def __text(self, text, **kwargs):
         """Configure la zone de texte de la page.
@@ -202,7 +203,7 @@ class Graphic(Tk):
         
         # Configuration de la zone de texte
         # wrap=WORD permet de découper le texte en mots
-        self.text_area.config(bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], font=kwargs["font"], wrap=WORD)
+        self.text_area.config(bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], padx=kwargs["padx"], pady=kwargs["pady"], font=kwargs["font"], wrap=WORD)
         
         # Insertion du texte
         self.text_area.insert(INSERT, text)
@@ -212,7 +213,7 @@ class Graphic(Tk):
         # Force la zone en lecture seule
         self.text_area.configure(state="disabled")
         
-    def __choices(self, choices, **kwargs):
+    def __choices(self, choices_data, **kwargs):
         """Configure les boutons de choix de la page.
         :param choices: Ensemble de couples (message, target_page)
         :type choices: set
@@ -220,14 +221,14 @@ class Graphic(Tk):
         
         # Suppression visuelle de tous les boutons
         # https://www.it-swarm.dev/fr/python/comment-supprimer-les-widgets-tkinter-dune-fenetre/1069571513/
-        for c in choices: c.pack_forget()
+        for choice in self.choices_button: choice.pack_forget()
         
         # Affichage des boutons en fonction des données
-        for c in [(self.choices_button[i], choices_data[i]) for i in range(len(choices_data))]:
-            c[0].config(text=c[1][0], justify=LEFT, command=lambda: self.print_page(c[1][1]), )
-            c[0].pack(fill=X, expand=True, padx=config.default_padx, pady=config.default_pady)
+        for index, choice in enumerate(choices_data):
+            self.choices_button[index].config(text=choice[0], cursor=kwargs["cursor"][index], bg=kwargs["background"][index], activebackground=kwargs["activebackground"][index], fg=kwargs["foreground"][index], bd=kwargs["borderwidth"][index], relief=kwargs["relief"][index], padx=kwargs["padx"][index], pady=kwargs["pady"][index], font=kwargs["font"][index], justify=LEFT, command=lambda: self.print_page(choice[1]))
+            self.choices_button[index].pack(fill=X, expand=True, padx=kwargs["padx"][index], pady=kwargs["pady"][index])
 
 
-graphic = Graphic()
+graphic = Graphic(Page.first_page)
 graphic.mainloop()
 

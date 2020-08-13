@@ -24,7 +24,7 @@ Page.first_page = accueil
 
 
 # Page d'accueil obligatoire
-accueil.image = "accueil.jpg"
+#accueil.image = "accueil.jpg"
 accueil.text = "Bienvenue dans @game. Un jeu fait pour vous émerveiller de la beauté de la nature. Voulez-vous commencer à jouer ?"
 accueil.add_choice("Non, je ne préfère pas.", accueil)
 accueil.add_choice("Oui, allons-y.", victoire)

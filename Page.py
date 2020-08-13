@@ -117,8 +117,11 @@ class Page:
             raise TypeError("button_msg doit être de type str et target_page de type Page")
         if button_msg != replace_alias(button_msg):
             raise ValueError("button_msg ne doit pas comporter d'alias")
-        if target_page == self:
-            raise ValueError("target_page ne doit pas pointer vers la page courante")
+        # On peut vouloir avoir un faux choix qui ramène sur la même page
+        # Ici, on laisse cette souplesse mais on peut décommenter si l'on
+        # souhaite un comportement plus restrictif
+        #if target_page == self:
+        #    raise ValueError("target_page ne doit pas pointer vers la page courante")
         if button_msg == "":
             button_msg = config.default_text_choice[len(self.choices)]
             
@@ -145,13 +148,13 @@ class GraphicalParameters:
         :type widget: int
         """
         
-        self.widget = widget
+        self.__widget = widget
         
-        if widget == GraphicalParameters.GLOBAL:
+        if self.__widget == GraphicalParameters.GLOBAL:
             self.cursor = config.default_cursor_page
             self.background = config.default_background_page
         
-        elif widget == GraphicalParameters.TITLE:
+        elif self.__widget == GraphicalParameters.TITLE:
             self.background = config.default_background_title
             self.foreground = config.default_foreground_title
             self.borderwidth = config.default_borderwidth_title
@@ -160,7 +163,7 @@ class GraphicalParameters:
             self.pady = config.default_pady_title
             self.font = config.default_font_title
         
-        elif widget == GraphicalParameters.TEXT:
+        elif self.__widget == GraphicalParameters.TEXT:
             self.background = config.default_background_text
             self.foreground = config.default_foreground_text
             self.borderwidth = config.default_borderwidth_text
@@ -169,7 +172,7 @@ class GraphicalParameters:
             self.pady = config.default_pady_text
             self.font = config.default_font_text
         
-        elif widget == GraphicalParameters.CHOICES:
+        elif self.__widget == GraphicalParameters.CHOICES:
             # Attention ici les paramètres sont des tuples
             self.cursor = config.default_cursor_choices
             self.background = config.default_background_choices
@@ -183,6 +186,18 @@ class GraphicalParameters:
         
         else:
             raise ValueError("Constante de widget invalide")
+            
+    def __setattr__(self, name, value):
+        """Redéfinition de __setattr__ pour forcer
+        le type des paramètres graphiques des boutons de choix
+        à être des tuples.
+        """
+        if name != "_GraphicalParameters__widget" and self.__widget == GraphicalParameters.CHOICES:
+            if type(value) != tuple:
+                raise TypeError("Les paramètres graphiques des boutons de choix doivent être des tuples")
+            elif len(value) >  MaxChoicesException.MAX:
+                raise MaxChoicesException()
+        super().__setattr__(name, value)
         
 
 class MaxChoicesException(Exception):
