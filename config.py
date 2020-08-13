@@ -29,7 +29,10 @@ default_cursor_page = "left_ptr"
 default_padx = 50; default_pady = 10
 
 # Police par défaut de la page
-default_font = ('Ubuntu', 15, 'normal')
+default_font_family = 'Ubuntu'
+default_font_size = 15
+default_font_weight = 'normal'
+default_font = (default_font_family, default_font_size, default_font_weight)
 
 #############################################
 # Personnalisation de la zone de titre      #
@@ -54,7 +57,7 @@ default_relief_title = "flat"
 default_padx_title = default_padx; default_pady_title = default_pady
 
 # Titre par défaut d'une page
-default_font_title = ('Ubuntu', 30, 'bold')
+default_font_title = (default_font_family, default_font_size * 2, 'bold')
 
 #############################################
 # Personnalisation de la zone d'image       #
