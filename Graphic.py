@@ -13,6 +13,7 @@ from pygame import mixer # sudo apt-get install python3-pygame
 from Page import *
 from config import default_window_title
 from pages import *
+from alias import replace_alias_tag
 
 # Pour l'utilisation de la bibliothèque Tkinter
 # les docs utilisées sont principalement :
@@ -80,28 +81,6 @@ class Graphic(Tk):
         
         # Affichage de la première page (le point d'entrée)
         self.print_page(first_page)
-    
-    def configure_initial_window(self):
-        """Configure la fenêtre et ses widgets
-        lors de l'initialisation.
-        """
-        # A supprimer !!!
-        pass
-        
-        
-        """
-        # https://www.reddit.com/r/learnpython/comments/6dndqz/how_would_you_make_text_that_automatically_wraps/
-        self.choice1 = Button(self, text = "Choix 1 blab blab vive la vie vive les betteraves etc enfin voilà tu comprends quoi fin j'espère", justify=LEFT)
-        self.choice1.bind('<Configure>', lambda e: self.choice1.config(wraplength = self.choice1.winfo_width()))
-        self.choice1.pack(fill=X, expand=True)
-        self.choice1.config(wraplength = self.choice1.winfo_width())
-        self.choice2 = Button(self, text = "Choix 2Choix 1 blab blab vive la vie vive les betteraves etc enfin voilà tu comprends quoi fin j'espère")
-        self.choice2.pack(fill=X, expand=True)
-        self.choice3 = Button(self, text = "Choix 3")
-        self.choice3.pack(fill=X, expand=True)
-        self.choice4 = Button(self, text = "Choix 4")
-        self.choice4.pack(fill=X, expand=True)
-        #self.choice4.pack_forget() https://www.it-swarm.dev/fr/python/comment-supprimer-les-widgets-tkinter-dune-fenetre/1069571513/"""
     
     @property 
     def window_width(self):
@@ -205,10 +184,19 @@ class Graphic(Tk):
         # wrap=WORD permet de découper le texte en mots
         self.text_area.config(bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], padx=kwargs["padx"], pady=kwargs["pady"], font=kwargs["font"], wrap=WORD)
         
+        # Résolution des alias
+        solve_alias = replace_alias_tag(text)
+        text = solve_alias["string"]
+      
         # Insertion du texte
         self.text_area.insert(INSERT, text)
         #self.text_area.tag_configure("center", justify=CENTER)
         #self.text_area.tag_add("center", 1.0, "end")
+        
+        # Création et configuration des tags
+        for tag in solve_alias["tags"]:
+            self.text_area.tag_add(tag[0], tag[1], tag[2])
+            self.text_area.tag_config(tag[0], font=kwargs["tag_font"], background=kwargs["tag_background"], foreground=kwargs["tag_foreground"], overstrike=kwargs["tag_overstrike"], underline=kwargs["tag_underline"])
         
         # Force la zone en lecture seule
         self.text_area.configure(state="disabled")
@@ -229,6 +217,6 @@ class Graphic(Tk):
             self.choices_button[index].pack(fill=X, expand=True, padx=kwargs["padx"][index], pady=kwargs["pady"][index])
 
 
-graphic = Graphic(Page.first_page)
+graphic = Graphic(first_page=Page.first_page)
 graphic.mainloop()
 

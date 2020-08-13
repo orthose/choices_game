@@ -91,6 +91,21 @@ default_padx_text = default_padx; default_pady_text = default_pady
 # Police par défaut de la zone de texte
 default_font_text = default_font
 
+# Police par défaut à utiliser pour les tags des alias
+default_tag_font_text = (default_font_family, default_font_size, 'bold')
+
+# Couleur d'arrière-plan par défaut pour les tags des alias
+default_tag_background_text = "#ffffff"
+
+# Couleur de police par défaut pour les tags des alias
+default_tag_foreground_text = "red"
+
+# Raye les tags des alias si fixé à 1
+default_tag_overstrike_text = 0
+
+# Souligne les tags des alias si fixé à 1
+default_tag_underline_text = 0
+
 #############################################
 # Personnalisation de la zone de choix      #
 #############################################

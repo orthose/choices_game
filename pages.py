@@ -31,7 +31,7 @@ accueil.add_choice("Oui, allons-y.", victoire)
 accueil.graphic_global.background = herbe
 
 # Page de victoire
-victoire.image = "victoire.img"
+victoire.image = "victoire.jpg"
 victoire.text = "Vous venez de remporter la partie ! Bravo pour tous vos efforts !"
 victoire.add_choice("Recommencer", accueil)
 

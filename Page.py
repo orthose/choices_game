@@ -6,7 +6,6 @@
 #                                                   #
 #####################################################
 
-from re import match
 from alias import replace_alias
 import config
 
@@ -171,6 +170,11 @@ class GraphicalParameters:
             self.padx = config.default_padx_text
             self.pady = config.default_pady_text
             self.font = config.default_font_text
+            self.tag_font = config.default_tag_font_text
+            self.tag_background = config.default_tag_background_text
+            self.tag_foreground = config.default_tag_foreground_text
+            self.tag_overstrike = config.default_tag_overstrike_text
+            self.tag_underline = config.default_tag_underline_text
         
         elif self.__widget == GraphicalParameters.CHOICES:
             # Attention ici les paramètres sont des tuples
