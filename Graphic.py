@@ -98,8 +98,6 @@ class Graphic(Tk):
         if page == None:
             raise ValueError("Impossible d'afficher une page non-instanciée !")
             
-        #print("print_page", page.title, page)
-            
         # Appel des méthodes privées pour configurer le contenu
         # et la forme des widgets de la page
         
@@ -211,15 +209,8 @@ class Graphic(Tk):
         # Affichage des boutons en fonction des données
         for index, choice in enumerate(choices_data):
             button_msg, target_page = choice
-            # Pour débogage
-            print("__choices", index, button_msg, target_page.title, target_page)
-            self.choices_button[index].config(text=button_msg, cursor=kwargs["cursor"][index], bg=kwargs["background"][index], activebackground=kwargs["activebackground"][index], fg=kwargs["foreground"][index], bd=kwargs["borderwidth"][index], relief=kwargs["relief"][index], padx=kwargs["padx"][index], pady=kwargs["pady"][index], font=kwargs["font"][index], justify=LEFT, command=lambda: self.f(index, target_page))
+            self.choices_button[index].config(text=button_msg, cursor=kwargs["cursor"][index], bg=kwargs["background"][index], activebackground=kwargs["activebackground"][index], fg=kwargs["foreground"][index], bd=kwargs["borderwidth"][index], relief=kwargs["relief"][index], padx=kwargs["padx"][index], pady=kwargs["pady"][index], font=kwargs["font"][index], justify=LEFT, command=lambda page=target_page: self.print_page(page))
             self.choices_button[index].pack(fill=X, expand=True, padx=kwargs["padx"][index], pady=kwargs["pady"][index])
-    
-    # Pour débogage
-    def f(self, index, target_page):
-        print(index)
-        self.print_page(target_page)
 
 
 graphic = Graphic(first_page=Page.first_page)
