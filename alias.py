@@ -6,10 +6,15 @@
 #                                                   #
 #####################################################
 
+# TODO: Ajouter et modifier les alias pour la personnalisation
+# Les alias vous simplifieront la vie lorsque vous écrierez
+# le texte d'une page (uniquement pour la zone de texte centrale)
+# Veuillez respecter le format @alias pour que cela fonctionne
+
 # Dictionnaire des alias permettant de personnaliser
 # certaines variables importantes du texte
 alias = {
-    "@game": "La randonnée pédestre",
+    "@game": "Mon formidable jeu",
 }
 
 def replace_alias(string):

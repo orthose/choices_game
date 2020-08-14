@@ -8,14 +8,13 @@
 
 # ATTENTION: Ne pas modifier ce fichier pour la personnalisation
 
-from tkinter import *
-from PIL import Image, ImageTk # sudo apt-get install -y python-pil.imagetk
-import tkinter.scrolledtext as st
-#from pygame import mixer # sudo apt-get install python3-pygame
-from Page import *
-from pages import *
-from config import default_window_title
-from alias import replace_alias_tag
+from tkinter import * # Bibliothèque graphique
+# sudo apt-get install -y python-pil.imagetk
+from PIL import Image, ImageTk # Bibliothèque de gestion des images
+import tkinter.scrolledtext as st # Zone de texte avec barre de déplacement
+# sudo apt-get install python3-pyga
+#from pygame import mixer # Bibliothèque de gestion de l'audio mp3
+from alias import replace_alias_tag # Gestion des alias dans la zone de texte
 
 # Pour l'utilisation de la bibliothèque Tkinter
 # les docs utilisées sont principalement :
@@ -28,7 +27,7 @@ class Graphic(Tk):
     Ne pas modifier pour la personnalisation.
     """
     
-    def __init__(self, title=config.default_window_title, first_page=Page.first_page):
+    def __init__(self, title, first_page=None):
         """Initialise la fenêtre principale.
         :param title: Titre de la fenêtre
         :param first_page: Première page à s'afficher
@@ -215,8 +214,4 @@ class Graphic(Tk):
             button_msg, target_page = choice
             self.choices_button[index].config(text=button_msg, cursor=kwargs["cursor"][index], bg=kwargs["background"][index], activebackground=kwargs["activebackground"][index], fg=kwargs["foreground"][index], bd=kwargs["borderwidth"][index], relief=kwargs["relief"][index], padx=kwargs["padx"][index], pady=kwargs["pady"][index], font=kwargs["font"][index], justify=LEFT, command=lambda page=target_page: self.print_page(page))
             self.choices_button[index].pack(fill=X, expand=True, padx=kwargs["padx"][index], pady=kwargs["pady"][index])
-
-
-graphic = Graphic(first_page=Page.first_page)
-graphic.mainloop()
 
