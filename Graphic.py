@@ -6,13 +6,15 @@
 #                                                   #
 #####################################################
 
+# ATTENTION: Ne pas modifier ce fichier pour la personnalisation
+
 from tkinter import *
 from PIL import Image, ImageTk # sudo apt-get install -y python-pil.imagetk
 import tkinter.scrolledtext as st
 #from pygame import mixer # sudo apt-get install python3-pygame
 from Page import *
-from config import default_window_title
 from pages import *
+from config import default_window_title
 from alias import replace_alias_tag
 
 # Pour l'utilisation de la bibliothèque Tkinter
@@ -22,6 +24,8 @@ from alias import replace_alias_tag
 class Graphic(Tk):
     """Gère la partie graphique du jeu
     et permet d'afficher une page.
+    
+    Ne pas modifier pour la personnalisation.
     """
     
     def __init__(self, title=config.default_window_title, first_page=Page.first_page):

@@ -6,11 +6,15 @@
 #                                                   #
 #####################################################
 
+# TODO: Variables graphiques par défaut du jeu à modifier pour personnalisation
+# Ce n'est pas obligatoire mais cela peut être utile pour un comportement
+# harmonisé entre les pages si vous désirez créer une ambiance particulière
+
+
 # Variables globales de la configuration graphique
 # Elles sont personnalisables avec précautions
 # Pour les paramétrer se référer au site web :
 # http://tkinter.fdex.eu/doc/sa.html
-
 
 #############################################
 # Personnalisation de la fenêtre principale #

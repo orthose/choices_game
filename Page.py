@@ -6,16 +6,26 @@
 #                                                   #
 #####################################################
 
-from alias import replace_alias
-import config
+# ATTENTION: Ne pas modifier ce fichier pour la personnalisation
+
+from alias import replace_alias # Utilisé pour des tests
+import config # Fichier de configuration graphique
 
 class Page:
     """Données stockées dans une page du jeu.
     L'intérêt est de vérifier la validité des données.
-    Cette classe ne doit pas être modifiée.
+    Cette classe ne doit pas être modifiée pour la personnalisation.
     
-    Toutes les pages sont accessibles via l'attribut
-    de classe Page.all_pages["une_page"].
+    Pour modifier le rendu graphique des éléments de la page
+    vous pouvez modifier la valeur des attributs suivants:
+    
+    Page::graphic_global -> Rendu graphique global de la page
+    Page::graphic_title -> Rendu graphique du titre de la page
+    Page::graphic_text -> Rendu graphique de la zone de texte
+    Page::graphic_choices -> Rendu graphique des boutons de choix
+    
+    Pour connaître les sous-attributs de chacun de ces attributs
+    voir la classe GraphicalParameters.
     """
     
     # Première page point d'entrée du jeu
@@ -54,7 +64,7 @@ class Page:
         self.__title = title
         self.__image = config.default_image
         self.__text = config.default_text
-        self.__choices = list()#set()
+        self.__choices = set()
         
         # Données graphiques classées par section
         # Données graphiques globales
@@ -119,22 +129,52 @@ class Page:
         # On peut vouloir avoir un faux choix qui ramène sur la même page
         # Ici, on laisse cette souplesse mais on peut décommenter si l'on
         # souhaite un comportement plus restrictif
-        if target_page == self:
-            raise ValueError("target_page ne doit pas pointer vers la page courante")
+        #if target_page == self:
+        #    raise ValueError("target_page ne doit pas pointer vers la page courante")
         if target_page == None:
             raise ValueError("target_page doit être instanciée")
         if button_msg == "":
             button_msg = config.default_text_choice[len(self.choices)]
             
         choice = (button_msg, target_page)
-        self.__choices.append(choice)#.add(choice)     
+        self.__choices.add(choice)     
         Page.links[self].append(target_page)
+    
+    @staticmethod
+    def check_choices():
+        """Vérifie que toutes les pages pointent au moins vers
+        une page qui n'est pas elle-même.
         
+        Renvoie une erreur si une page invalide est détectée.
+        """
+        for page in Page.links.keys():
+            if len(page.choices) == 0 or (len(page.choices) == 1 and list(page.choices)[0][1] == page):
+                raise TargetPagesException(page)
         
 class GraphicalParameters:
     """Permet de gérer les données des paramètres graphiques
-    de chaque widget et de vérifier la validité du format et type
-    de ces paramètres.
+    de chaque widget. La validité des données est essentiellement
+    vérifiée par tkinter par la suite.
+    
+    Vous pouvez modifier la valeur des attributs suivants
+    en fonction du widget concerné:
+    
+    widget == GLOBAL
+        cursor; background
+        
+    widget == TITLE
+        background; foreground; borderwidth; relief; padx; pady; font
+        
+    widget == TEXT
+        background; foreground; borderwidth; relief; padx; pady; font; 
+        tag_font; tag_background; tag_foreground; tag_overstrike; tag_underline
+    
+    ATTENTION pour le widget CHOICES, les paramètres
+    sont des tuples de 1 à 4 valeurs !
+      
+    widget == CHOICES
+        cursor; background; activebackground; foreground; borderwidth; relief;
+        padx; pady; font
     """
     
     # Constantes pour spécifier le type d'objet graphique
@@ -218,3 +258,15 @@ class MaxChoicesException(Exception):
         
     def __str__(self):
         return self.message
+        
+class TargetPagesException(Exception):
+    """Si une page ne pointe vers aucune autre ou juste elle-même,
+    l'erreur sera déclenchée.
+    """
+    
+    def __init__(self, page):
+        self.message = "La page " + page.title + " ne pointe pas vers une autre page" 
+        
+    def __str__(self):
+        return self.message
+    
