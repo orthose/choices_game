@@ -54,7 +54,7 @@ class Page:
         self.__title = title
         self.__image = config.default_image
         self.__text = config.default_text
-        self.__choices = set()
+        self.__choices = list()#set()
         
         # Données graphiques classées par section
         # Données graphiques globales
@@ -119,14 +119,16 @@ class Page:
         # On peut vouloir avoir un faux choix qui ramène sur la même page
         # Ici, on laisse cette souplesse mais on peut décommenter si l'on
         # souhaite un comportement plus restrictif
-        #if target_page == self:
-        #    raise ValueError("target_page ne doit pas pointer vers la page courante")
+        if target_page == self:
+            raise ValueError("target_page ne doit pas pointer vers la page courante")
+        if target_page == None:
+            raise ValueError("target_page doit être instanciée")
         if button_msg == "":
             button_msg = config.default_text_choice[len(self.choices)]
             
-        choice = (button_msg, target_page)      
-        self.__choices.add(choice)     
-        Page.links[self].append(choice[1])
+        choice = (button_msg, target_page)
+        self.__choices.append(choice)#.add(choice)     
+        Page.links[self].append(target_page)
         
         
 class GraphicalParameters:

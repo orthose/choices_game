@@ -9,7 +9,7 @@
 from tkinter import *
 from PIL import Image, ImageTk # sudo apt-get install -y python-pil.imagetk
 import tkinter.scrolledtext as st
-from pygame import mixer # sudo apt-get install python3-pygame
+#from pygame import mixer # sudo apt-get install python3-pygame
 from Page import *
 from config import default_window_title
 from pages import *
@@ -66,19 +66,14 @@ class Graphic(Tk):
         self.text_area.pack(fill=X)
         
         # Boutons des différents choix (jusqu'à 4 choix)
-        self.choice1 = Button(self)
-        self.choice2 = Button(self)
-        self.choice3 = Button(self)
-        self.choice4 = Button(self)
         # Liste des boutons de choix pour plus de praticité
-        self.choices_button = [self.choice1, self.choice2, self.choice3, self.choice4]
+        self.choices_button = [Button(self), Button(self), Button(self), Button(self)]
         # Lors du redimensionnement de la fenêtre le texte
         # doit également être redimensionné dans les boutons
         # https://www.reddit.com/r/learnpython/comments/6dndqz/how_would_you_make_text_that_automatically_wraps/
         for choice in self.choices_button:
             choice.bind('<Configure>', lambda e: choice.config(wraplength = choice.winfo_width()))
-            choice.pack(fill=X, expand=True)
-        
+            
         # Affichage de la première page (le point d'entrée)
         self.print_page(first_page)
     
@@ -101,7 +96,9 @@ class Graphic(Tk):
         """
         
         if page == None:
-            raise ValueError("Impossible d'afficher une page non-instanciée !") 
+            raise ValueError("Impossible d'afficher une page non-instanciée !")
+            
+        #print("print_page", page.title, page)
             
         # Appel des méthodes privées pour configurer le contenu
         # et la forme des widgets de la page
@@ -203,8 +200,8 @@ class Graphic(Tk):
         
     def __choices(self, choices_data, **kwargs):
         """Configure les boutons de choix de la page.
-        :param choices: Ensemble de couples (message, target_page)
-        :type choices: set
+        :param choices_data: Ensemble de couples (message, target_page)
+        :type choices_data: set
         """
         
         # Suppression visuelle de tous les boutons
@@ -213,8 +210,16 @@ class Graphic(Tk):
         
         # Affichage des boutons en fonction des données
         for index, choice in enumerate(choices_data):
-            self.choices_button[index].config(text=choice[0], cursor=kwargs["cursor"][index], bg=kwargs["background"][index], activebackground=kwargs["activebackground"][index], fg=kwargs["foreground"][index], bd=kwargs["borderwidth"][index], relief=kwargs["relief"][index], padx=kwargs["padx"][index], pady=kwargs["pady"][index], font=kwargs["font"][index], justify=LEFT, command=lambda: self.print_page(choice[1]))
+            button_msg, target_page = choice
+            # Pour débogage
+            print("__choices", index, button_msg, target_page.title, target_page)
+            self.choices_button[index].config(text=button_msg, cursor=kwargs["cursor"][index], bg=kwargs["background"][index], activebackground=kwargs["activebackground"][index], fg=kwargs["foreground"][index], bd=kwargs["borderwidth"][index], relief=kwargs["relief"][index], padx=kwargs["padx"][index], pady=kwargs["pady"][index], font=kwargs["font"][index], justify=LEFT, command=lambda: self.f(index, target_page))
             self.choices_button[index].pack(fill=X, expand=True, padx=kwargs["padx"][index], pady=kwargs["pady"][index])
+    
+    # Pour débogage
+    def f(self, index, target_page):
+        print(index)
+        self.print_page(target_page)
 
 
 graphic = Graphic(first_page=Page.first_page)
