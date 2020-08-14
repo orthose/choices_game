@@ -11,8 +11,8 @@
 # Utilisez la commande <python3 choices_game.py>
 
 from Graphic import *
-from Page import *; from pages import *
-from config import default_window_title
+from Page import *; from config.pages import *
+from config.config import default_window_title
 
 # Lance l'interface graphique du jeu
 graphic = Graphic(default_window_title, first_page=Page.first_page)

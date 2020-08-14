@@ -15,7 +15,7 @@ from PIL import Image, ImageTk # Bibliothèque de gestion des images
 import tkinter.scrolledtext as st # Zone de texte avec barre de déplacement
 # sudo apt-get install python3-pyga
 from pygame import mixer # Bibliothèque de gestion de l'audio mp3
-from alias import replace_alias_tag # Gestion des alias dans la zone de texte
+from config.alias import replace_alias_tag # Gestion des alias dans la zone de texte
 
 # Pour l'utilisation de la bibliothèque Tkinter
 # les docs utilisées sont principalement :

@@ -8,8 +8,8 @@
 
 # ATTENTION: Ne pas modifier ce fichier pour la personnalisation
 
-from alias import replace_alias # Utilisé pour des tests
-import config # Fichier de configuration graphique
+from config.alias import replace_alias # Utilisé pour des tests
+import config.config as config # Fichier de configuration graphique
 
 class Page:
     """Données stockées dans une page du jeu.
