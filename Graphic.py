@@ -7,13 +7,14 @@
 #####################################################
 
 # ATTENTION: Ne pas modifier ce fichier pour la personnalisation
+# Il s'agit du fichier gérant l'interface graphique
 
 from tkinter import * # Bibliothèque graphique
 # sudo apt-get install -y python-pil.imagetk
 from PIL import Image, ImageTk # Bibliothèque de gestion des images
 import tkinter.scrolledtext as st # Zone de texte avec barre de déplacement
 # sudo apt-get install python3-pyga
-#from pygame import mixer # Bibliothèque de gestion de l'audio mp3
+from pygame import mixer # Bibliothèque de gestion de l'audio mp3
 from alias import replace_alias_tag # Gestion des alias dans la zone de texte
 
 # Pour l'utilisation de la bibliothèque Tkinter
@@ -77,6 +78,10 @@ class Graphic(Tk):
         for choice in self.choices_button:
             choice.bind('<Configure>', lambda e: choice.config(wraplength = choice.winfo_width()))
             
+        # Initialisation du lecteur de musique mp3
+        self.sound = first_page.sound
+        mixer.init()
+            
         # Affichage de la première page (le point d'entrée)
         self.print_page(first_page)
     
@@ -100,6 +105,13 @@ class Graphic(Tk):
         
         if page == None:
             raise ValueError("Impossible d'afficher une page non-instanciée !")
+            
+        # Lancement de la musique de la page
+        if mixer.music.get_busy():
+            mixer.music.fadeout(1000)
+            self.sound = page.sound
+        mixer.music.load("sounds/"+self.sound)
+        mixer.music.play()
             
         # Appel des méthodes privées pour configurer le contenu
         # et la forme des widgets de la page

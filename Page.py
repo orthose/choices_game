@@ -65,6 +65,7 @@ class Page:
         self.__image = config.default_image
         self.__text = config.default_text
         self.__choices = set()
+        self.__sound = config.default_sound
         
         # Données graphiques classées par section
         # Données graphiques globales
@@ -98,12 +99,13 @@ class Page:
     def choices(self):
         return self.__choices
         
+    @property
+    def sound(self):
+        return self.__sound
+        
     @image.setter
     def image(self, image):
-        if type(image) != str:
-            raise TypeError("Page::image doit être de type str")
-        if image != replace_alias(image):
-            raise ValueError("Page::image ne doit pas contenir d'alias")
+        Page.check_file(image, "image")
         self.__image = image
         
     @text.setter
@@ -111,6 +113,18 @@ class Page:
         if type(text) != str:
             raise TypeError("Page::text doit être de type str et peut comporter des alias")
         self.__text = text
+        
+    @sound.setter
+    def sound(self, sound):
+        Page.check_file(sound, "sound")
+        self.__sound = sound
+    
+    @staticmethod   
+    def check_file(file_name, param):
+        if type(file_name) != str:
+            raise TypeError("Page::"+param+" doit être de type str")
+        if file_name != replace_alias(file_name):
+            raise ValueError("Page::"+param+" ne doit pas contenir d'alias")
         
     def add_choice(self, button_msg, target_page):
         """Ajoute un choix à la page, limitée à 4 choix

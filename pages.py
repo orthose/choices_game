@@ -29,6 +29,8 @@ Page.first_page = accueil
 # Page d'accueil obligatoire pour démarrer le jeu
 # Paramétrage de l'image à afficher
 accueil.image = "accueil.jpg"
+# Paramétrage de la musique à joueur
+accueil.sound = "accueil.mp3"
 # Paramétrage du texte à afficher
 # Vous pouvez utiliser des alias de la forme @alias
 # Pour cela ajouter les dans le fichier alias.py

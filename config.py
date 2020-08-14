@@ -145,3 +145,10 @@ default_pady_choices = (default_pady, ) * 4
 # Police par défaut du bouton de choix
 default_font_choices = (default_font, ) * 4
 
+#############################################
+# Personnalisation de la musique            #
+#############################################
+
+# Musique par défaut d'une page
+default_sound = "default_sound.mp3"
+
