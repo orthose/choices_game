@@ -151,6 +151,9 @@ class Graphic(Tk):
 
         # https://stackoverflow.com/questions/6582387/image-resize-under-photoimage
         
+        # Modification de l'attribut pour le redimensionnement
+        self.image = image
+        
         # Pour supprimer le contenu du canvas
         self.canvas_image.delete("all")
         
