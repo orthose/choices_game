@@ -6,15 +6,30 @@ Bibliothèque graphique: Tkinter
 Comment l'installer et l'exécuter sous Ubuntu 20.04 ?
 -----------------------------------------------------
 
-1. Installer Python 3 <sudo apt install python3>
+1. Installer Python 3
+``` 
+sudo apt install python3
+```
 
-2. Cloner le répertoire git <git clone https://github.com/orthose/choices_game>
+2. Cloner le répertoire git 
+```
+git clone https://github.com/orthose/choices_game
+```
 
-3. Supprimer les répertoires de git <rm -rf .git*>
+3. Supprimer les répertoires de git
+``` 
+rm -rf .git*
+```
 
-4. Installer les bibliothèques tierces suivantes <sudo apt install -y python-pil.imagetk python3-pygame>
+4. Installer les bibliothèques tierces suivantes
+``` 
+sudo apt install -y python-pil.imagetk python3-pygame>
+```
 
-5. Exécuter le programme <python3 choices_game.py>
+5. Exécuter le programme
+``` 
+python3 choices_game.py
+```
 
 Comment l'installer et l'exécuter sous Windows 10 ?
 ---------------------------------------------------
@@ -26,9 +41,15 @@ ou en téléchargeant l'installateur depuis https://www.python.org/downloads/win
 
 3. Supprimer le fichier .gitignore
 
-4. Installer les bibliothèques tierces suivantes <pip install pillow pygame>
+4. Installer les bibliothèques tierces suivantes
+``` 
+pip install pillow pygame
+```
 
-5. Exécuter le programme <python choices_game.py>
+5. Exécuter le programme
+``` 
+python choices_game.py
+```
 ou double-cliquer sur le fichier choices_game.py
 
 Comment personnaliser le jeu ?
