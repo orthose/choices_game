@@ -50,6 +50,15 @@ class Graphic(Tk):
         # https://www.it-swarm.dev/fr/python/comment-puis-je-empecher-le-redimensionnement-dune-fenetre-avec-tkinter/1045090982/
         #self.resizable(width=False, height=False)
         
+        # Menu des actions supplémentaires
+        self.menu_bar = Menu(self)
+        self.sound_is_enabled = True
+        self.menu_bar.add_command(label="Activer le son", command=self.enable_sound)
+        self.menu_bar.add_command(label="Couper le son", command=self.disable_sound)
+        self.menu_bar.add_command(label="Recommencer", command=lambda page=first_page: self.print_page(page))
+        self.menu_bar.add_command(label="Quitter", command=self.quit)
+        self.config(menu=self.menu_bar)
+        
         # Zone de titre de la page
         self.label_title = Label(self)
         self.label_title.pack()
@@ -108,11 +117,7 @@ class Graphic(Tk):
             
         # Lancement de la musique de la page
         self.sound = page.sound
-        if mixer.music.get_busy():
-            mixer.music.fadeout(1000)
-        if self.sound != None:
-            mixer.music.load("sounds/"+self.sound)
-            mixer.music.play()
+        self.run_sound()
             
         # Appel des méthodes privées pour configurer le contenu
         # et la forme des widgets de la page
@@ -227,4 +232,26 @@ class Graphic(Tk):
             button_msg, target_page = choice
             self.choices_button[index].config(text=button_msg, cursor=kwargs["cursor"][index], bg=kwargs["background"][index], activebackground=kwargs["activebackground"][index], fg=kwargs["foreground"][index], bd=kwargs["borderwidth"][index], relief=kwargs["relief"][index], padx=kwargs["padx"][index], pady=kwargs["pady"][index], font=kwargs["font"][index], justify=LEFT, command=lambda page=target_page: self.print_page(page))
             self.choices_button[index].pack(fill=X, expand=True, padx=kwargs["padx"][index], pady=kwargs["pady"][index])
+            
+    def run_sound(self):
+        """Lance la musique mp3 du fichier
+        enregistré dans l'attribut self.sound.
+        """
+        if mixer.music.get_busy():
+            mixer.music.fadeout(1000)
+        if self.sound != None and self.sound_is_enabled:
+            mixer.music.load("sounds/"+self.sound)
+            mixer.music.play()
+            
+    def enable_sound(self):
+        """Active la musique.
+        """
+        self.sound_is_enabled = True
+        self.run_sound()
+        
+    def disable_sound(self):
+        """Désactive la musique.
+        """
+        self.sound_is_enabled = False
+        self.run_sound()
 
