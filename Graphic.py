@@ -13,7 +13,7 @@ from tkinter import * # Bibliothèque graphique
 # sudo apt-get install -y python-pil.imagetk
 from PIL import Image, ImageTk # Bibliothèque de gestion des images
 import tkinter.scrolledtext as st # Zone de texte avec barre de déplacement
-# sudo apt-get install python3-pyga
+# sudo apt-get install python3-pygame
 from pygame import mixer # Bibliothèque de gestion de l'audio mp3
 from config.alias import replace_alias_tag # Gestion des alias dans la zone de texte
 
