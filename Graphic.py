@@ -15,7 +15,7 @@ from PIL import Image, ImageTk # Bibliothèque de gestion des images
 import tkinter.scrolledtext as st # Zone de texte avec barre de déplacement
 # sudo apt-get install python3-pygame
 from pygame import mixer # Bibliothèque de gestion de l'audio mp3
-from config.alias import replace_alias_tag # Gestion des alias dans la zone de texte
+from config.alias import replace_alias_tag, replace_alias # Gestion des alias dans la zone de texte
 
 # Pour l'utilisation de la bibliothèque Tkinter
 # les docs utilisées sont principalement :
@@ -233,6 +233,8 @@ class Graphic(Tk):
         # Affichage des boutons en fonction des données
         for index, choice in enumerate(choices_data):
             button_msg, target_page = choice
+            # Résolution des alias
+            button_msg = replace_alias(button_msg)
             self.choices_button[index].config(text=button_msg, cursor=kwargs["cursor"][index], bg=kwargs["background"][index], activebackground=kwargs["activebackground"][index], fg=kwargs["foreground"][index], bd=kwargs["borderwidth"][index], relief=kwargs["relief"][index], padx=kwargs["padx"][index], pady=kwargs["pady"][index], font=kwargs["font"][index], justify=LEFT, command=lambda page=target_page: self.print_page(page))
             self.choices_button[index].pack(fill=X, expand=True, padx=kwargs["padx"][index], pady=kwargs["pady"][index])
             

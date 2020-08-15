@@ -138,8 +138,9 @@ class Page:
             raise MaxChoicesException()  
         if type(button_msg) != str or type(target_page) != Page:
             raise TypeError("button_msg doit être de type str et target_page de type Page")
-        if button_msg != replace_alias(button_msg):
-            raise ValueError("button_msg ne doit pas comporter d'alias")
+        # Décommenter pour empêcher l'utilisation d'alias dans les boutons
+        #if button_msg != replace_alias(button_msg):
+        #    raise ValueError("button_msg ne doit pas comporter d'alias")
         # On peut vouloir avoir un faux choix qui ramène sur la même page
         # Ici, on laisse cette souplesse mais on peut décommenter si l'on
         # souhaite un comportement plus restrictif
