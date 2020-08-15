@@ -12,9 +12,7 @@ Comment l'installer et l'exécuter sous Ubuntu 20.04 ?
 
 3. Supprimer les répertoires de git <rm -rf .git*>
 
-4. Installer les bibliothèques tierces suivantes
-<sudo apt install -y python-pil.imagetk>
-<sudo apt install python3-pygame>
+4. Installer les bibliothèques tierces suivantes <sudo apt install -y python-pil.imagetk python3-pygame>
 
 5. Exécuter le programme <python3 choices_game.py>
 
@@ -28,9 +26,7 @@ ou en téléchargeant l'installateur depuis https://www.python.org/downloads/win
 
 3. Supprimer le fichier .gitignore
 
-4. Installer les bibliothèques tierces suivantes
-<pip install pillow>
-<pip install pygame>
+4. Installer les bibliothèques tierces suivantes <pip install pillow pygame>
 
 5. Exécuter le programme <python choices_game.py>
 ou double-cliquer sur le fichier choices_game.py
