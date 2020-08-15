@@ -107,11 +107,12 @@ class Graphic(Tk):
             raise ValueError("Impossible d'afficher une page non-instanciée !")
             
         # Lancement de la musique de la page
+        self.sound = page.sound
         if mixer.music.get_busy():
             mixer.music.fadeout(1000)
-            self.sound = page.sound
-        mixer.music.load("sounds/"+self.sound)
-        mixer.music.play()
+        if self.sound != None:
+            mixer.music.load("sounds/"+self.sound)
+            mixer.music.play()
             
         # Appel des méthodes privées pour configurer le contenu
         # et la forme des widgets de la page

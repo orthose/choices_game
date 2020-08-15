@@ -150,5 +150,5 @@ default_font_choices = (default_font, ) * 4
 #############################################
 
 # Musique par défaut d'une page
-default_sound = "default_sound.mp3"
+default_sound = None#"default_sound.mp3"
 
