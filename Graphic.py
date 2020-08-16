@@ -141,7 +141,7 @@ class Graphic(Tk):
     def __title(self, title, **kwargs):
         """Configure le titre de la page.
         """
-        self.label_title.config(text=title, bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], padx=kwargs["padx"], pady=kwargs["pady"], font=kwargs["font"], justify=CENTER)
+        self.label_title.config(text=replace_alias(title), bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], padx=kwargs["padx"], pady=kwargs["pady"], font=kwargs["font"], justify=CENTER)
     
     def __image(self, image, **kwargs):
         """Configure l'image de la page.

@@ -57,8 +57,9 @@ class Page:
             raise TypeError("Page::title doit être de type str")
         if title == "":
             raise ValueError("Page::title ne doit pas être vide")
-        if title != replace_alias(title):
-            raise ValueError("Page::title ne doit pas comporter d'alias")
+        # Décommenter pour empêcher les alias dans le titre
+        #if title != replace_alias(title):
+        #    raise ValueError("Page::title ne doit pas comporter d'alias")
             
         # Données du contenu général
         self.__title = title
