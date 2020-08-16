@@ -246,7 +246,7 @@ class Graphic(Tk):
             mixer.music.fadeout(1000)
         if self.sound != None and self.sound_is_enabled:
             mixer.music.load("sounds/"+self.sound)
-            mixer.music.play()
+            mixer.music.play(loops=-1)
             
     def enable_sound(self):
         """Active la musique.
