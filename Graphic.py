@@ -69,7 +69,7 @@ class Graphic(Tk):
         # Lors du redimensionnement de la fenêtre l'image
         # doit également être redimensionnée
         self.canvas_image.bind('<Configure>', lambda e: self.__image(self.image))
-        self.canvas_image.pack()
+        self.canvas_image.pack(pady=first_page.graphic_image.pady)
         
         # Zone de texte avec barre de défilement intégrée
         self.text_area = st.ScrolledText(self)
@@ -127,7 +127,7 @@ class Graphic(Tk):
         # Titre de la page
         self.__title(page.title, **page.graphic_title.__dict__)
         # Affichage de l'image
-        self.__image(page.image)
+        self.__image(page.image, **page.graphic_image.__dict__)
         # Texte de la page
         self.__text(page.text, **page.graphic_text.__dict__)
         # Boutons des choix
@@ -143,7 +143,7 @@ class Graphic(Tk):
         """
         self.label_title.config(text=title, bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], padx=kwargs["padx"], pady=kwargs["pady"], font=kwargs["font"], justify=CENTER)
     
-    def __image(self, image):
+    def __image(self, image, **kwargs):
         """Configure l'image de la page.
         :param image: Nom de l'image dans le dossier pictures/
         :type image: str
@@ -183,6 +183,9 @@ class Graphic(Tk):
         # Création de la zone du canvas et ajout à la fenêtre principale
         self.canvas_image.config(width = new_size[0], height = new_size[1])
         self.canvas_image.create_image(0, 0, anchor=NW, image=self.converted_image)
+        
+        # Modification de la marge en y de l'image
+        self.canvas_image.pack(pady=kwargs["pady"])
     
     def __text(self, text, **kwargs):
         """Configure la zone de texte de la page.

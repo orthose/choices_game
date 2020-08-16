@@ -74,6 +74,9 @@ class Page:
         # Données graphiques du titre de la page
         self.graphic_title = GraphicalParameters(GraphicalParameters.TITLE)
         
+        # Données graphiques de l'image de la page
+        self.graphic_image = GraphicalParameters(GraphicalParameters.IMAGE)
+        
         # Données graphiques du texte de la page
         self.graphic_text = GraphicalParameters(GraphicalParameters.TEXT)
         
@@ -180,6 +183,9 @@ class GraphicalParameters:
     widget == TITLE
         background; foreground; borderwidth; relief; padx; pady; font
         
+    widget == IMAGE
+        pady
+        
     widget == TEXT
         background; foreground; borderwidth; relief; padx; pady; font; 
         tag_font; tag_background; tag_foreground; tag_overstrike; tag_underline
@@ -193,7 +199,7 @@ class GraphicalParameters:
     """
     
     # Constantes pour spécifier le type d'objet graphique
-    GLOBAL = 0; TITLE = 1; TEXT = 2; CHOICES = 3
+    GLOBAL = 0; TITLE = 1; IMAGE = 2; TEXT = 3; CHOICES = 4
     
     def __init__(self, widget):
         """Tous les arguments possibles sont
@@ -218,6 +224,9 @@ class GraphicalParameters:
             self.padx = config.default_padx_title
             self.pady = config.default_pady_title
             self.font = config.default_font_title
+            
+        elif self.__widget == GraphicalParameters.IMAGE:
+            self.pady = config.default_pady_image
         
         elif self.__widget == GraphicalParameters.TEXT:
             self.background = config.default_background_text

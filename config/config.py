@@ -70,6 +70,9 @@ default_font_title = (default_font_family, default_font_size * 2, 'bold')
 # Image par défaut d'une page
 default_image = "default_image.jpg"
 
+# Marge par défaut en y de l'image
+default_pady_image = default_pady
+
 #############################################
 # Personnalisation de la zone de texte      #
 #############################################
