@@ -78,8 +78,8 @@ class Graphic(Tk):
         self.text_area = st.ScrolledText(self)
         # Lors du redimensionnement de la fenêtre le texte
         # doit également être redimensionné
-        self.text_area.bind('<Configure>', lambda e: self.text_area.config(height=(self.window_height // 100)))
-        self.text_area.pack(fill=X)
+        self.text_area.bind('<Configure>', lambda e: self.text_area.config(height=(self.window_height // 125)))
+        self.text_area.pack()
         
         # Boutons des différents choix (jusqu'à 4 choix)
         # Liste des boutons de choix pour plus de praticité
@@ -172,7 +172,7 @@ class Graphic(Tk):
         # La taille maximale du plus grand côté de l'image redimensionnée
         # est calculée dans max_size en fonction de la hauteur de la fenêtre principale
         # car tous les widgets sont assemblés sur la hauteur 
-        new_size = tuple(); max_size = self.window_height // 2
+        new_size = tuple(); max_size = int(self.window_height / 1.5)
         
         # Le plus grand côté de l'image est sur sa longueur
         if self.loaded_image.size[0] == max(self.loaded_image.size):
