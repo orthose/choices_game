@@ -153,7 +153,7 @@ class Page:
         if target_page == None:
             raise ValueError("target_page doit être instanciée")
         if button_msg == "":
-            button_msg = config.default_text_choice[len(self.choices)]
+            button_msg = config.default_text_choices[len(self.choices)]
             
         choice = (button_msg, target_page)
         self.__choices.add(choice)     
