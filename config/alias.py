@@ -50,7 +50,7 @@ def replace_alias_tag(string):
         while one_alias in string:
             first_index = string.find(one_alias)
             last_index = first_index + len(alias[one_alias])
-            tags.append(("alias"+str(nb_tags), float("1."+str(first_index)), float("1."+str(last_index))))
+            tags.append(("alias"+str(nb_tags), "1."+str(first_index), "1."+str(last_index)))
             string = string.replace(one_alias, alias[one_alias], 1)
             
             nb_tags += 1

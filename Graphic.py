@@ -215,6 +215,8 @@ class Graphic(Tk):
         #self.text_area.tag_configure("center", justify=CENTER)
         #self.text_area.tag_add("center", 1.0, "end")
         
+        # Suppression des tags
+        for tag in self.text_area.tag_names(): self.text_area.tag_delete(tag) 
         # Création et configuration des tags
         for tag in solve_alias["tags"]:
             self.text_area.tag_add(tag[0], tag[1], tag[2])
