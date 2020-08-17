@@ -63,7 +63,9 @@ class Graphic(Tk):
         
         # Zone de titre de la page
         self.label_title = Label(self)
-        self.label_title.pack()
+        self.label_title.pack(fill=X)
+        # Lors du redimensionnement le titre est redimensionné
+        self.label_title.bind('<Configure>', lambda e, t=self.label_title: t.config(wraplength = t.winfo_width()))
         
         # Zone d'affichage de l'image
         self.canvas_image = Canvas(self)
