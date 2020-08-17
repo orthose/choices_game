@@ -37,6 +37,8 @@ class Graphic(Tk):
         """
         if first_page == None:
             raise ValueError("La première page n'a pas été instanciée !")
+        else:
+            self.current_page = first_page
             
         # Appel au constructeur de Tk
         super().__init__()
@@ -65,10 +67,9 @@ class Graphic(Tk):
         
         # Zone d'affichage de l'image
         self.canvas_image = Canvas(self)
-        self.image = first_page.image
         # Lors du redimensionnement de la fenêtre l'image
         # doit également être redimensionnée
-        self.canvas_image.bind('<Configure>', lambda e: self.__image(self.image))
+        self.canvas_image.bind('<Configure>', lambda e: self.__image())
         self.canvas_image.pack(pady=first_page.graphic_image.pady)
         
         # Zone de texte avec barre de défilement intégrée
@@ -88,7 +89,6 @@ class Graphic(Tk):
             choice.bind('<Configure>', lambda e: choice.config(wraplength = choice.winfo_width()))
             
         # Initialisation du lecteur de musique mp3
-        self.sound = first_page.sound
         mixer.init()
             
         # Affichage de la première page (le point d'entrée)
@@ -114,6 +114,8 @@ class Graphic(Tk):
         
         if page == None:
             raise ValueError("Impossible d'afficher une page non-instanciée !")
+        else:
+            self.current_page = page
             
         # Lancement de la musique de la page
         self.sound = page.sound
@@ -123,36 +125,38 @@ class Graphic(Tk):
         # et la forme des widgets de la page
         
         # Couleur de l'arrière-plan de la page
-        self.__page(**page.graphic_global.__dict__)
+        self.__global()
         # Titre de la page
-        self.__title(page.title, **page.graphic_title.__dict__)
+        self.__title()
         # Affichage de l'image
-        self.__image(page.image, **page.graphic_image.__dict__)
+        self.__image()
         # Texte de la page
-        self.__text(page.text, **page.graphic_text.__dict__)
+        self.__text()
         # Boutons des choix
-        self.__choices(page.choices, **page.graphic_choices.__dict__)
+        self.__choices()
     
-    def __page(self, **kwargs):
+    def __global(self):
         """Configure la page de manière globale.
         """
+        kwargs = self.current_page.graphic_global.__dict__
         self.configure(cursor=kwargs["cursor"], bg=kwargs["background"])
     
-    def __title(self, title, **kwargs):
+    def __title(self):
         """Configure le titre de la page.
         """
-        self.label_title.config(text=replace_alias(title), bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], padx=kwargs["padx"], pady=kwargs["pady"], font=kwargs["font"], justify=CENTER)
+        kwargs = self.current_page.graphic_title.__dict__
+        self.label_title.config(text=replace_alias(self.current_page.title), bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], padx=kwargs["padx"], pady=kwargs["pady"], font=kwargs["font"], justify=CENTER)
     
-    def __image(self, image, **kwargs):
+    def __image(self):
         """Configure l'image de la page.
         :param image: Nom de l'image dans le dossier pictures/
         :type image: str
         """
-
+        kwargs = self.current_page.graphic_image.__dict__
         # https://stackoverflow.com/questions/6582387/image-resize-under-photoimage
         
         # Modification de l'attribut pour le redimensionnement
-        self.image = image
+        image = self.current_page.image
         
         # Pour supprimer le contenu du canvas
         self.canvas_image.delete("all")
@@ -185,14 +189,14 @@ class Graphic(Tk):
         self.canvas_image.create_image(0, 0, anchor=NW, image=self.converted_image)
         
         # Modification de la marge en y de l'image
-        self.canvas_image.pack(pady=kwargs["pady"])
+        self.canvas_image.pack(pady=self.current_page.graphic_image.pady)
     
-    def __text(self, text, **kwargs):
+    def __text(self):
         """Configure la zone de texte de la page.
         :param text: Texte à afficher dans la zone
         :type text: str
         """
-    
+        kwargs = self.current_page.graphic_text.__dict__
         # https://stackoverflow.com/questions/17657212/how-to-code-the-tkinter-scrolledtext-module/17658025
         # https://stackoverflow.com/questions/32577726/python-3-tkinter-how-to-word-wrap-text-in-tkinter-text
         
@@ -207,7 +211,7 @@ class Graphic(Tk):
         self.text_area.config(bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], padx=kwargs["padx"], pady=kwargs["pady"], font=kwargs["font"], wrap=WORD)
         
         # Résolution des alias
-        solve_alias = replace_alias_tag(text)
+        solve_alias = replace_alias_tag(self.current_page.text)
         text = solve_alias["string"]
       
         # Insertion du texte
@@ -225,12 +229,13 @@ class Graphic(Tk):
         # Force la zone en lecture seule
         self.text_area.configure(state="disabled")
         
-    def __choices(self, choices_data, **kwargs):
+    def __choices(self):
         """Configure les boutons de choix de la page.
         :param choices_data: Ensemble de couples (message, target_page)
         :type choices_data: set
         """
-        
+        kwargs = self.current_page.graphic_choices.__dict__
+        choices_data = self.current_page.choices
         # Suppression visuelle de tous les boutons
         # https://www.it-swarm.dev/fr/python/comment-supprimer-les-widgets-tkinter-dune-fenetre/1069571513/
         for choice in self.choices_button: choice.pack_forget()
@@ -250,7 +255,7 @@ class Graphic(Tk):
         if mixer.music.get_busy():
             mixer.music.fadeout(1000)
         if self.sound != None and self.sound_is_enabled:
-            mixer.music.load("sounds/"+self.sound)
+            mixer.music.load("sounds/"+self.current_page.sound)
             mixer.music.play(loops=-1)
             
     def enable_sound(self):
