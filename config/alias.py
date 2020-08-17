@@ -6,6 +6,8 @@
 #                                                   #
 #####################################################
 
+import re
+
 # TODO: Ajouter et modifier les alias pour la personnalisation
 # Les alias vous simplifieront la vie lorsque vous écrierez
 # le texte d'une page (uniquement pour la zone de texte centrale)
@@ -45,15 +47,34 @@ def replace_alias_tag(string):
      caractères modifiée et les tags
     :rtype: dict
     """
-    tags = list(); nb_tags = 0
+    # On trouve tous les alias
+    all_alias = list()
     for one_alias in alias.keys():
-        while one_alias in string:
-            first_index = string.find(one_alias)
-            last_index = first_index + len(alias[one_alias])
-            tags.append(("alias"+str(nb_tags), "1."+str(first_index), "1."+str(last_index)))
-            string = string.replace(one_alias, alias[one_alias], 1)
+        if one_alias in string:
+            all_alias.append(one_alias)
             
-            nb_tags += 1
+    # On cherche toutes les occurences des alias dans le texte
+    # avec l'indice de la première lettre de l'alias
+    all_alias_order = list()
+    for one_alias in all_alias:
+        first_occurences = [a.start() for a in re.finditer(one_alias, string)]
+        for fo in first_occurences:
+            all_alias_order.append((fo, one_alias))
+    
+    # On cherche à obtenir simplement la liste des alias
+    # dans le bon ordre par rapport au texte
+    all_alias_order.sort()
+    all_alias_order = [aao[1] for aao in all_alias_order]
+    
+    # Calcul et résolution des alias
+    tags = list(); nb_tags = 0
+    for one_alias in all_alias_order:
+        first_index = string.find(one_alias)
+        last_index = first_index + len(alias[one_alias])
+        tags.append(("alias"+str(nb_tags), "1."+str(first_index), "1."+str(last_index)))
+        string = string.replace(one_alias, alias[one_alias], 1)
+            
+        nb_tags += 1
             
     return {"string":string, "tags":tags}
     
