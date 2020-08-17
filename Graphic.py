@@ -86,7 +86,7 @@ class Graphic(Tk):
         # doit également être redimensionné dans les boutons
         # https://www.reddit.com/r/learnpython/comments/6dndqz/how_would_you_make_text_that_automatically_wraps/
         for choice in self.choices_button:
-            choice.bind('<Configure>', lambda e: choice.config(wraplength = choice.winfo_width()))
+            choice.bind('<Configure>', lambda e, c=choice: c.config(wraplength = c.winfo_width()))
             
         # Initialisation du lecteur de musique mp3
         mixer.init()
