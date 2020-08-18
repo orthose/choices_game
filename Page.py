@@ -185,11 +185,12 @@ class GraphicalParameters:
         background; foreground; borderwidth; relief; padx; pady; font
         
     widget == IMAGE
-        pady
+        pady; divider_height
         
     widget == TEXT
         background; foreground; borderwidth; relief; padx; pady; font; 
-        tag_font; tag_background; tag_foreground; tag_overstrike; tag_underline
+        tag_font; tag_background; tag_foreground; tag_overstrike; tag_underline;
+        divider_height
     
     ATTENTION pour le widget CHOICES, les paramètres
     sont des tuples de 1 à 4 valeurs !
@@ -228,6 +229,7 @@ class GraphicalParameters:
             
         elif self.__widget == GraphicalParameters.IMAGE:
             self.pady = config.default_pady_image
+            self.divider_height = config.default_divider_height_image
         
         elif self.__widget == GraphicalParameters.TEXT:
             self.background = config.default_background_text
@@ -242,6 +244,7 @@ class GraphicalParameters:
             self.tag_foreground = config.default_tag_foreground_text
             self.tag_overstrike = config.default_tag_overstrike_text
             self.tag_underline = config.default_tag_underline_text
+            self.divider_height = config.default_divider_height_text
         
         elif self.__widget == GraphicalParameters.CHOICES:
             # Attention ici les paramètres sont des tuples

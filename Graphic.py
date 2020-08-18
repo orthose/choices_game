@@ -78,7 +78,7 @@ class Graphic(Tk):
         self.text_area = st.ScrolledText(self)
         # Lors du redimensionnement de la fenêtre le texte
         # doit également être redimensionné
-        self.text_area.bind('<Configure>', lambda e: self.text_area.config(height=(self.window_height // 125)))
+        self.text_area.bind('<Configure>', lambda e, s=self: s.text_area.config(height=(s.window_height // s.current_page.graphic_text.divider_height)))
         self.text_area.pack()
         
         # Boutons des différents choix (jusqu'à 4 choix)
@@ -172,7 +172,7 @@ class Graphic(Tk):
         # La taille maximale du plus grand côté de l'image redimensionnée
         # est calculée dans max_size en fonction de la hauteur de la fenêtre principale
         # car tous les widgets sont assemblés sur la hauteur 
-        new_size = tuple(); max_size = int(self.window_height / 1.5)
+        new_size = tuple(); max_size = int(self.window_height / self.current_page.graphic_image.divider_height)
         
         # Le plus grand côté de l'image est sur sa longueur
         if self.loaded_image.size[0] == max(self.loaded_image.size):
@@ -203,7 +203,7 @@ class Graphic(Tk):
         # https://stackoverflow.com/questions/32577726/python-3-tkinter-how-to-word-wrap-text-in-tkinter-text
         
         # Pour autoriser les modifications
-        self.text_area.configure(state="normal")
+        self.text_area.configure(state="normal", height=(self.window_height // self.current_page.graphic_text.divider_height))
         # Suppression du contenu de l'aire de texte
         # https://stackoverflow.com/questions/27966626/how-to-clear-delete-the-contents-of-a-tkinter-text-widget
         self.text_area.delete(1.0, END)

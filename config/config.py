@@ -73,6 +73,10 @@ default_image = "default_image.jpg"
 # Marge par défaut en y de l'image
 default_pady_image = default_pady
 
+# Flottant pour diviser la hauteur de la fenêtre
+# Le résultat fixe la hauteur de l'image
+default_divider_height_image = 1.5
+
 #############################################
 # Personnalisation de la zone de texte      #
 #############################################
@@ -112,6 +116,10 @@ default_tag_overstrike_text = 0
 
 # Souligne les tags des alias si fixé à 1
 default_tag_underline_text = 0
+
+# Entier pour diviser la hauteur de la fenêtre
+# Le résultat fixe la hauteur de la zone de texte
+default_divider_height_text = 125
 
 #############################################
 # Personnalisation de la zone de choix      #
