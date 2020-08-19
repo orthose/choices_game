@@ -217,6 +217,7 @@ class GraphicalParameters:
         if self.__widget == GraphicalParameters.GLOBAL:
             self.cursor = config.default_cursor_page
             self.background = config.default_background_page
+            self.placement = config.default_placement_page
         
         elif self.__widget == GraphicalParameters.TITLE:
             self.background = config.default_background_title
@@ -225,9 +226,12 @@ class GraphicalParameters:
             self.relief = config.default_relief_title
             self.padx = config.default_padx_title
             self.pady = config.default_pady_title
+            self.ipadx = config.default_ipadx_title
+            self.ipady = config.default_ipady_title
             self.font = config.default_font_title
             
         elif self.__widget == GraphicalParameters.IMAGE:
+            self.padx = config.default_padx_image
             self.pady = config.default_pady_image
             self.divider_height = config.default_divider_height_image
         
@@ -238,13 +242,15 @@ class GraphicalParameters:
             self.relief = config.default_relief_text
             self.padx = config.default_padx_text
             self.pady = config.default_pady_text
+            self.ipadx = config.default_ipadx_text
+            self.ipady = config.default_ipady_text
             self.font = config.default_font_text
             self.tag_font = config.default_tag_font_text
             self.tag_background = config.default_tag_background_text
             self.tag_foreground = config.default_tag_foreground_text
             self.tag_overstrike = config.default_tag_overstrike_text
             self.tag_underline = config.default_tag_underline_text
-            self.divider_height = config.default_divider_height_text
+            self.lines = config.default_lines_text
         
         elif self.__widget == GraphicalParameters.CHOICES:
             # Attention ici les paramètres sont des tuples
@@ -256,6 +262,8 @@ class GraphicalParameters:
             self.relief = config.default_relief_choices
             self.padx = config.default_padx_choices
             self.pady = config.default_pady_choices
+            self.ipadx = config.default_ipadx_choices
+            self.ipady = config.default_ipady_choices
             self.font = config.default_font_choices
         
         else:
@@ -272,6 +280,16 @@ class GraphicalParameters:
             elif len(value) >  MaxChoicesException.MAX:
                 raise MaxChoicesException()
         super().__setattr__(name, value)
+    
+    @property
+    def placement(self):
+        return self._placement
+    
+    @placement.setter
+    def placement(self, placement):
+        if not(0 <= placement and placement < 4):
+            raise ValueError("GraphicalParameters::placement doit être compris entre 0 et 4 exclu")
+        self._placement = placement
         
 
 class MaxChoicesException(Exception):

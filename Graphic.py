@@ -28,6 +28,8 @@ class Graphic(Tk):
     Ne pas modifier pour la personnalisation.
     """
     
+    SIDE = [TOP, LEFT, BOTTOM, RIGHT]
+    
     def __init__(self, title, first_page=None):
         """Initialise la fenêtre principale.
         :param title: Titre de la fenêtre
@@ -55,6 +57,8 @@ class Graphic(Tk):
         # Menu des actions supplémentaires
         self.menu_bar = Menu(self)
         self.sound_is_enabled = True
+        self.index_placement = first_page.graphic_global.placement
+        self.menu_bar.add_command(label="Disposition", command=self.change_placement)
         self.menu_bar.add_command(label="Activer le son", command=self.enable_sound)
         self.menu_bar.add_command(label="Couper le son", command=self.disable_sound)
         self.menu_bar.add_command(label="Recommencer", command=lambda page=first_page: self.print_page(page))
@@ -72,14 +76,14 @@ class Graphic(Tk):
         # Lors du redimensionnement de la fenêtre l'image
         # doit également être redimensionnée
         self.canvas_image.bind('<Configure>', lambda e: self.__image())
-        self.canvas_image.pack(pady=first_page.graphic_image.pady)
+        self.canvas_image.pack()
         
         # Zone de texte avec barre de défilement intégrée
         self.text_area = st.ScrolledText(self)
         # Lors du redimensionnement de la fenêtre le texte
         # doit également être redimensionné
-        self.text_area.bind('<Configure>', lambda e, s=self: s.text_area.config(height=(s.window_height // s.current_page.graphic_text.divider_height)))
-        self.text_area.pack()
+        #self.text_area.bind('<Configure>', lambda e, s=self: s.text_area.config(height=s.current_page.graphic_text.lines // 2))
+        self.text_area.pack(fill=X)
         
         # Boutons des différents choix (jusqu'à 4 choix)
         # Liste des boutons de choix pour plus de praticité
@@ -142,12 +146,14 @@ class Graphic(Tk):
         """
         kwargs = self.current_page.graphic_global.__dict__
         self.configure(cursor=kwargs["cursor"], bg=kwargs["background"])
+        self.index_placement = self.current_page.graphic_global.placement; self.change_placement()
     
     def __title(self):
         """Configure le titre de la page.
         """
         kwargs = self.current_page.graphic_title.__dict__
-        self.label_title.config(text=replace_alias(self.current_page.title), bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], padx=kwargs["padx"], pady=kwargs["pady"], font=kwargs["font"], justify=CENTER)
+        self.label_title.config(text=replace_alias(self.current_page.title), bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], padx=kwargs["ipadx"], pady=kwargs["ipady"], font=kwargs["font"], justify=CENTER)
+        self.label_title.pack(padx=kwargs["padx"], pady=kwargs["pady"])
     
     def __image(self):
         """Configure l'image de la page.
@@ -191,7 +197,7 @@ class Graphic(Tk):
         self.canvas_image.create_image(0, 0, anchor=NW, image=self.converted_image)
         
         # Modification de la marge en y de l'image
-        self.canvas_image.pack(pady=self.current_page.graphic_image.pady)
+        self.canvas_image.pack(padx=kwargs["padx"], pady=kwargs["pady"])
     
     def __text(self):
         """Configure la zone de texte de la page.
@@ -203,14 +209,14 @@ class Graphic(Tk):
         # https://stackoverflow.com/questions/32577726/python-3-tkinter-how-to-word-wrap-text-in-tkinter-text
         
         # Pour autoriser les modifications
-        self.text_area.configure(state="normal", height=(self.window_height // self.current_page.graphic_text.divider_height))
+        self.text_area.configure(state="normal", height=kwargs["lines"])
         # Suppression du contenu de l'aire de texte
         # https://stackoverflow.com/questions/27966626/how-to-clear-delete-the-contents-of-a-tkinter-text-widget
         self.text_area.delete(1.0, END)
         
         # Configuration de la zone de texte
         # wrap=WORD permet de découper le texte en mots
-        self.text_area.config(bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], padx=kwargs["padx"], pady=kwargs["pady"], font=kwargs["font"], wrap=WORD)
+        self.text_area.config(bg=kwargs["background"], fg=kwargs["foreground"], bd=kwargs["borderwidth"], relief=kwargs["relief"], padx=kwargs["ipadx"], pady=kwargs["ipady"], font=kwargs["font"], wrap=WORD)
         
         # Résolution des alias
         solve_alias = replace_alias_tag(self.current_page.text)
@@ -231,6 +237,9 @@ class Graphic(Tk):
         # Force la zone en lecture seule
         self.text_area.configure(state="disabled")
         
+        # Configuration des marges en x et y
+        self.text_area.pack(padx=kwargs["padx"], pady=kwargs["pady"])
+        
     def __choices(self):
         """Configure les boutons de choix de la page.
         :param choices_data: Ensemble de couples (message, target_page)
@@ -247,7 +256,7 @@ class Graphic(Tk):
             button_msg, target_page = choice
             # Résolution des alias
             button_msg = replace_alias(button_msg)
-            self.choices_button[index].config(text=button_msg, cursor=kwargs["cursor"][index], bg=kwargs["background"][index], activebackground=kwargs["activebackground"][index], fg=kwargs["foreground"][index], bd=kwargs["borderwidth"][index], relief=kwargs["relief"][index], padx=kwargs["padx"][index], pady=kwargs["pady"][index], font=kwargs["font"][index], justify=LEFT, command=lambda page=target_page: self.print_page(page))
+            self.choices_button[index].config(text=button_msg, cursor=kwargs["cursor"][index], bg=kwargs["background"][index], activebackground=kwargs["activebackground"][index], fg=kwargs["foreground"][index], bd=kwargs["borderwidth"][index], relief=kwargs["relief"][index], padx=kwargs["ipadx"][index], pady=kwargs["ipady"][index], font=kwargs["font"][index], justify=LEFT, command=lambda page=target_page: self.print_page(page))
             self.choices_button[index].pack(fill=X, expand=True, padx=kwargs["padx"][index], pady=kwargs["pady"][index])
             
     def run_sound(self):
@@ -271,4 +280,11 @@ class Graphic(Tk):
         """
         self.sound_is_enabled = False
         self.run_sound()
+        
+    def change_placement(self):
+        """Change la disposition de la page,
+        en déplaçant l'image sur l'un des côtés.
+        """
+        self.canvas_image.pack(side=Graphic.SIDE[self.index_placement])
+        self.index_placement = (self.index_placement + 1) % len(Graphic.SIDE)
 

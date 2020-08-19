@@ -29,14 +29,20 @@ default_background_page = "#ffffff"
 # Curseur par défaut de la page
 default_cursor_page = "left_ptr"
 
-# Marges par défaut en x et y des widgets de la page
+# Marges externes par défaut en x et y des widgets de la page
 default_padx = 50; default_pady = 10
+
+# Marges internes par défaut en x et y des widgets de la page
+default_ipadx = 3; default_ipady = 3
 
 # Police par défaut de la page
 default_font_family = 'Ubuntu'
 default_font_size = 15
 default_font_weight = 'normal'
 default_font = (default_font_family, default_font_size, default_font_weight)
+
+# Disposition par défaut entre 0 et 3
+default_placement_page = 0
 
 #############################################
 # Personnalisation de la zone de titre      #
@@ -57,8 +63,11 @@ default_borderwidth_title = None
 # Relief par défaut de l'étiquette du titre d'une page
 default_relief_title = "flat"
 
-# Marges par défaut en x et y du titre d'une page
+# Marges internes par défaut en x et y du titre d'une page
 default_padx_title = default_padx; default_pady_title = default_pady
+
+# Marges externes par défaut en x et y du titre d'une page
+default_ipadx_title = default_ipadx; default_ipady_title = default_ipady
 
 # Titre par défaut d'une page
 default_font_title = (default_font_family, default_font_size * 2, 'bold')
@@ -70,9 +79,8 @@ default_font_title = (default_font_family, default_font_size * 2, 'bold')
 # Image par défaut d'une page
 default_image = "default_image.jpg"
 
-# Marge par défaut en y de l'image
-default_pady_image = default_pady
-
+# Marges par défaut en x et y de l'image
+default_padx_image = default_padx; default_pady_image = default_pady
 # Flottant pour diviser la hauteur de la fenêtre
 # Le résultat fixe la hauteur de l'image
 default_divider_height_image = 1.5
@@ -96,8 +104,11 @@ default_borderwidth_text = None
 # Relief par défaut de la zone de texte
 default_relief_text = "flat" 
 
-# Marges par défaut en x et y de la zone de texte
+# Marges externes par défaut en x et y de la zone de texte
 default_padx_text = default_padx; default_pady_text = default_pady
+
+# Marges internes par défaut en x et y de la zone de texte
+default_ipadx_text = default_ipadx; default_ipady_text = default_ipady
 
 # Police par défaut de la zone de texte
 default_font_text = default_font
@@ -117,9 +128,8 @@ default_tag_overstrike_text = 0
 # Souligne les tags des alias si fixé à 1
 default_tag_underline_text = 0
 
-# Entier pour diviser la hauteur de la fenêtre
-# Le résultat fixe la hauteur de la zone de texte
-default_divider_height_text = 125
+# Nombre de lignes de la zone de texte
+default_lines_text = 4
 
 #############################################
 # Personnalisation de la zone de choix      #
@@ -149,9 +159,13 @@ default_borderwidth_choices = (None, ) * 4
 # Relief par défaut du bouton de choix
 default_relief_choices = ("groove", ) * 4 
 
-# Marges par défaut en x et y des boutons
+# Marges externes par défaut en x et y des boutons
 default_padx_choices = (default_padx, ) * 4
 default_pady_choices = (default_pady, ) * 4
+
+# Marges internes par défaut en x et y des boutons
+default_ipadx_choices = (default_ipadx, ) * 4
+default_ipady_choices = (default_ipady, ) * 4
 
 # Police par défaut du bouton de choix
 default_font_choices = (default_font, ) * 4
